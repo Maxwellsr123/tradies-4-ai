@@ -94,7 +94,9 @@ const Store = (() => {
   }
 
   async function syncProfile() {
-    if (!supa) return;
+    // Only put someone on the leaderboard once they've actually signed up
+    // (entered a name) — not the moment they open the app.
+    if (!supa || !state.onboarded) return;
     try {
       const { error } = await supa.rpc('upsert_profile', {
         p_client_id: ensureClientId(),
