@@ -157,3 +157,77 @@ language sql security definer set search_path = public as $$
   limit greatest(least(coalesce(lim, 60), 200), 1);
 $$;
 grant execute on function public.get_suggestions(text, integer) to anon;
+
+
+-- ============================================================
+--  Admin dashboard (admin.html) — passcode-gated, server-side.
+--  Passcode is stored as a bcrypt hash; every admin function
+--  verifies it before doing anything. Set the initial passcode
+--  in the insert below, then change it from the dashboard.
+-- ============================================================
+create extension if not exists pgcrypto with schema extensions;
+
+create table if not exists public.admin_config (
+  id int primary key default 1,
+  pass_hash text not null,
+  constraint admin_singleton check (id = 1)
+);
+alter table public.admin_config enable row level security;
+revoke all on public.admin_config from anon, authenticated;
+
+-- INITIAL PASSCODE — change 'CHANGE-ME' before running on a fresh project:
+insert into public.admin_config (id, pass_hash)
+values (1, extensions.crypt('CHANGE-ME', extensions.gen_salt('bf')))
+on conflict (id) do nothing;
+
+create or replace function public.admin_ok(p_pass text)
+returns boolean language sql security definer set search_path = public, extensions as $$
+  select exists (select 1 from admin_config where id = 1 and pass_hash = extensions.crypt(p_pass, pass_hash));
+$$;
+
+-- All admin reads in one call (stats + leaderboard + ideas).
+create or replace function public.admin_overview(p_pass text)
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
+begin
+  if not admin_ok(p_pass) then raise exception 'bad passcode'; end if;
+  return jsonb_build_object(
+    'stats', jsonb_build_object(
+      'tradies', (select count(*) from profiles),
+      'total_xp', (select coalesce(sum(total_xp),0) from profiles),
+      'active_today', (select count(*) from profiles where last_active = current_date),
+      'ideas', (select count(*) from suggestions),
+      'votes', (select count(*) from suggestion_votes)),
+    'leaderboard', (select coalesce(jsonb_agg(to_jsonb(l)), '[]'::jsonb) from (
+        select display_name, trade, avatar, total_xp, current_streak, last_active
+        from profiles order by total_xp desc, updated_at asc limit 300) l),
+    'ideas', (select coalesce(jsonb_agg(to_jsonb(i)), '[]'::jsonb) from (
+        select s.id, s.text, count(v.client_id) as votes, s.created_at
+        from suggestions s left join suggestion_votes v on v.suggestion_id = s.id
+        group by s.id order by count(v.client_id) desc, s.created_at asc) i));
+end; $$;
+grant execute on function public.admin_overview(text) to anon;
+
+create or replace function public.admin_delete_suggestion(p_pass text, p_id uuid)
+returns void language plpgsql security definer set search_path = public, extensions as $$
+begin if not admin_ok(p_pass) then raise exception 'bad passcode'; end if;
+  delete from suggestions where id = p_id; end; $$;
+grant execute on function public.admin_delete_suggestion(text, uuid) to anon;
+
+create or replace function public.admin_delete_profile(p_pass text, p_name text)
+returns integer language plpgsql security definer set search_path = public, extensions as $$
+declare n integer; begin if not admin_ok(p_pass) then raise exception 'bad passcode'; end if;
+  delete from profiles where display_name = p_name; get diagnostics n = row_count; return n; end; $$;
+grant execute on function public.admin_delete_profile(text, text) to anon;
+
+create or replace function public.admin_reset_leaderboard(p_pass text)
+returns void language plpgsql security definer set search_path = public, extensions as $$
+begin if not admin_ok(p_pass) then raise exception 'bad passcode'; end if;
+  delete from profiles; end; $$;
+grant execute on function public.admin_reset_leaderboard(text) to anon;
+
+create or replace function public.admin_set_passcode(p_pass text, p_new text)
+returns void language plpgsql security definer set search_path = public, extensions as $$
+begin if not admin_ok(p_pass) then raise exception 'bad passcode'; end if;
+  if length(p_new) < 6 then raise exception 'new passcode too short (min 6)'; end if;
+  update admin_config set pass_hash = extensions.crypt(p_new, extensions.gen_salt('bf')) where id = 1; end; $$;
+grant execute on function public.admin_set_passcode(text, text) to anon;

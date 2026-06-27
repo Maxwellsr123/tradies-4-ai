@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin · Tradies 4 AI</title>
+  <link rel="icon" href="icons/icon-192.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{--orange:#FF6A00;--ink:#1A1B1E;--muted:#8a8f99;--bg:#F4F2EE;--card:#fff;--line:#E7E3DC;--green:#27AE60;--red:#E5484D}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+    .wrap{max-width:760px;margin:0 auto;padding:18px 16px 60px}
+    a{color:var(--orange)}
+    h1{font-size:22px;font-weight:900;margin:0}
+    .brand span{color:var(--orange)}
+    .btn{font-family:inherit;font-weight:800;border:none;border-radius:12px;padding:11px 16px;cursor:pointer;font-size:15px}
+    .btn-primary{background:var(--orange);color:#fff}
+    .btn-ghost{background:#fff;border:2px solid var(--line);color:var(--ink)}
+    .btn-danger{background:#fff;border:2px solid var(--red);color:var(--red)}
+    .btn-sm{padding:6px 10px;font-size:13px;border-radius:9px}
+    input{font-family:inherit;font-size:16px;font-weight:600;padding:12px 14px;border:2px solid var(--line);border-radius:12px;width:100%}
+    input:focus{outline:none;border-color:var(--orange)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+    /* gate */
+    #gate{max-width:380px;margin:12vh auto 0;text-align:center}
+    #gate .logo{width:70px;height:70px;border-radius:20px;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 14px}
+    #gate h1{margin-bottom:4px}
+    #gate p{color:var(--muted);font-weight:700;font-size:14px;margin-top:4px}
+    #gate input{margin:16px 0 12px;text-align:center}
+    .err{color:var(--red);font-weight:800;font-size:14px;min-height:20px}
+    /* dashboard */
+    .toprow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+    .actions{display:flex;gap:8px}
+    .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px}
+    .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center}
+    .stat .n{font-size:22px;font-weight:900;color:var(--orange)}
+    .stat .l{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+    h2{font-size:16px;font-weight:900;margin:22px 0 10px;display:flex;align-items:center;gap:8px}
+    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    th,td{text-align:left;padding:10px 12px;font-size:14px;border-bottom:1px solid var(--line)}
+    th{background:#faf8f5;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.3px;color:var(--muted)}
+    tr:last-child td{border-bottom:none}
+    td.r,th.r{text-align:right;white-space:nowrap}
+    .pill{background:#f1eee8;border-radius:20px;padding:2px 9px;font-weight:800;font-size:13px}
+    .muted{color:var(--muted);font-weight:700}
+    .danger-zone{margin-top:26px;border:2px dashed #f0c4c4;border-radius:16px;padding:16px;background:#fffafa}
+    .danger-zone h2{color:var(--red);margin-top:0}
+    .danger-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .empty{text-align:center;color:var(--muted);font-weight:700;padding:20px}
+    .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 18px;border-radius:24px;font-weight:800;font-size:14px;opacity:0;transition:.25s;pointer-events:none}
+    .toast.show{opacity:1}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- LOGIN GATE -->
+    <div id="gate">
+      <div class="logo">🔐</div>
+      <h1 class="brand">Admin · Tradies <span>4</span> AI</h1>
+      <p>Private — passcode required.</p>
+      <input id="pass" type="password" placeholder="Enter admin passcode" autocomplete="off" />
+      <button class="btn btn-primary" style="width:100%" id="unlock">Unlock</button>
+      <div class="err" id="gate-err"></div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dash" style="display:none">
+      <div class="toprow">
+        <h1 class="brand">📊 Tradies <span>4</span> AI — Admin</h1>
+        <div class="actions">
+          <button class="btn btn-ghost btn-sm" id="refresh">↻ Refresh</button>
+          <button class="btn btn-ghost btn-sm" id="lock">Lock</button>
+        </div>
+      </div>
+
+      <div class="stats" id="stats"></div>
+
+      <h2>🏆 Leaderboard <span class="muted" id="lb-count"></span></h2>
+      <div id="lb"></div>
+
+      <h2>💡 Ideas board <span class="muted" id="idea-count"></span></h2>
+      <div id="ideas"></div>
+
+      <div class="danger-zone">
+        <h2>⚠️ Admin actions</h2>
+        <div class="danger-row">
+          <button class="btn btn-danger btn-sm" id="reset-lb">Reset leaderboard (wipe all scores)</button>
+          <button class="btn btn-ghost btn-sm" id="change-pass">Change passcode</button>
+        </div>
+        <p class="muted" style="font-size:13px;margin-bottom:0">Resetting is handy to start a fresh weekly race. Ideas are kept.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script>
+    const sb = supabase.createClient(window.CONFIG.SUPABASE_URL, window.CONFIG.SUPABASE_ANON_KEY);
+    const KEY = 't4ai_admin_pass';
+    let pass = localStorage.getItem(KEY) || '';
+
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+    function fmtDate(d){ if(!d) return '—'; return d; }
+
+    async function api(fn, args){
+      const { data, error } = await sb.rpc(fn, args);
+      if (error) throw error;
+      return data;
+    }
+
+    async function unlock(tryPass){
+      try {
+        const data = await api('admin_overview', { p_pass: tryPass });
+        pass = tryPass;
+        localStorage.setItem(KEY, pass);
+        $('gate').style.display = 'none';
+        $('dash').style.display = 'block';
+        render(data);
+      } catch (e){
+        $('gate-err').textContent = 'Wrong passcode';
+        localStorage.removeItem(KEY);
+      }
+    }
+
+    async function refresh(){
+      try { render(await api('admin_overview', { p_pass: pass })); }
+      catch(e){ toast('Session expired — unlock again'); lock(); }
+    }
+
+    function lock(){
+      localStorage.removeItem(KEY); pass='';
+      $('dash').style.display='none'; $('gate').style.display='block';
+      $('pass').value=''; $('gate-err').textContent='';
+    }
+
+    function render(d){
+      const s = d.stats;
+      $('stats').innerHTML = [
+        ['Tradies', s.tradies],['Total XP', s.total_xp],['Active today', s.active_today],
+        ['Ideas', s.ideas],['Votes', s.votes]
+      ].map(([l,n])=>`<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+
+      const lb = d.leaderboard || [];
+      $('lb-count').textContent = `(${lb.length})`;
+      $('lb').innerHTML = lb.length ? `<table><thead><tr>
+          <th>#</th><th></th><th>Name</th><th>Trade</th><th class="r">XP</th><th class="r">🔥</th><th class="r">Last seen</th><th></th>
+        </tr></thead><tbody>${lb.map((p,i)=>`<tr>
+          <td>${i+1}</td><td>${esc(p.avatar||'🦺')}</td>
+          <td><b>${esc(p.display_name)}</b></td><td class="muted">${esc(p.trade||'')}</td>
+          <td class="r"><b>${p.total_xp}</b></td><td class="r">${p.current_streak||0}</td>
+          <td class="r muted">${fmtDate(p.last_active)}</td>
+          <td class="r"><button class="btn btn-ghost btn-sm" data-del-profile="${esc(p.display_name)}">remove</button></td>
+        </tr>`).join('')}</tbody></table>` : `<div class="card empty">No tradies on the board yet.</div>`;
+
+      const ideas = d.ideas || [];
+      $('idea-count').textContent = `(${ideas.length})`;
+      $('ideas').innerHTML = ideas.length ? `<table><thead><tr>
+          <th class="r">Votes</th><th>Topic</th><th></th>
+        </tr></thead><tbody>${ideas.map(it=>`<tr>
+          <td class="r"><span class="pill">${it.votes}</span></td>
+          <td>${esc(it.text)}</td>
+          <td class="r"><button class="btn btn-ghost btn-sm" data-del-idea="${it.id}">delete</button></td>
+        </tr>`).join('')}</tbody></table>` : `<div class="card empty">No ideas yet.</div>`;
+
+      // wire row actions
+      document.querySelectorAll('[data-del-idea]').forEach(b=>b.onclick=async()=>{
+        if(!confirm('Delete this idea?')) return;
+        try { await api('admin_delete_suggestion',{p_pass:pass,p_id:b.dataset.delIdea}); toast('Idea deleted'); refresh(); }
+        catch(e){ toast('Failed: '+e.message); }
+      });
+      document.querySelectorAll('[data-del-profile]').forEach(b=>b.onclick=async()=>{
+        const nm=b.dataset.delProfile;
+        if(!confirm(`Remove "${nm}" from the leaderboard?`)) return;
+        try { const n=await api('admin_delete_profile',{p_pass:pass,p_name:nm}); toast(`Removed ${n} entr${n===1?'y':'ies'}`); refresh(); }
+        catch(e){ toast('Failed: '+e.message); }
+      });
+    }
+
+    // top actions
+    $('unlock').onclick = ()=>unlock($('pass').value.trim());
+    $('pass').addEventListener('keydown', e=>{ if(e.key==='Enter') unlock($('pass').value.trim()); });
+    $('refresh').onclick = refresh;
+    $('lock').onclick = lock;
+    $('reset-lb').onclick = async()=>{
+      if(!confirm('Wipe the WHOLE leaderboard? Everyone’s scores reset to zero. (Ideas are kept.)')) return;
+      try { await api('admin_reset_leaderboard',{p_pass:pass}); toast('Leaderboard reset'); refresh(); }
+      catch(e){ toast('Failed: '+e.message); }
+    };
+    $('change-pass').onclick = async()=>{
+      const np = prompt('New passcode (min 6 characters):');
+      if(!np) return;
+      try { await api('admin_set_passcode',{p_pass:pass,p_new:np.trim()}); pass=np.trim(); localStorage.setItem(KEY,pass); toast('Passcode changed ✓'); }
+      catch(e){ toast('Failed: '+e.message); }
+    };
+
+    // auto-unlock if we already have a saved passcode
+    if (pass) unlock(pass);
+  </script>
+</body>
+</html>

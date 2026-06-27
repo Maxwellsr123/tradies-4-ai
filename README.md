@@ -94,6 +94,24 @@ Build the top ones, and they tick off your "coming soon" list for you.
 
 ---
 
+## Admin dashboard (just for you)
+
+There's a private dashboard at **`/admin.html`** (e.g. `your-site/admin.html`) — not linked
+from the app, so the crew never sees it. It's locked behind an **admin passcode**: enter it once
+and you get, at a glance:
+
+- **Stats** — total tradies, total XP, who's active today, idea + vote counts
+- **The full leaderboard** — with a *remove* button for any dodgy entry
+- **The Ideas board** — every requested topic + votes, with a *delete* button for spam
+- **Reset leaderboard** — wipe scores for a fresh weekly race (ideas are kept)
+- **Change passcode** — set your own anytime
+
+It's secure: the passcode is checked **on the server** (stored only as a bcrypt hash), and every
+admin action re-checks it — so the page being public doesn't matter, nothing works without the
+passcode. For full raw control you can also always use the Supabase dashboard directly.
+
+---
+
 ## 4. Add or edit lessons (no real coding)
 
 All content lives in [`js/content.js`](js/content.js). Copy a lesson block, edit the text,
