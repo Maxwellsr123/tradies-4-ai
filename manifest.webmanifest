@@ -1,0 +1,16 @@
+{
+  "name": "Tradies 4 AI",
+  "short_name": "Tradies 4 AI",
+  "description": "Learn AI the tradie way — bite-sized lessons for sparkies, plumbers, builders and chippies.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F4F2EE",
+  "theme_color": "#FF6A00",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
