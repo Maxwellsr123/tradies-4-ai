@@ -1,806 +1,609 @@
 /* ============================================================
    Tradies 4 AI — Course content
    ------------------------------------------------------------
-   To add lessons: copy a lesson block and edit it. To add a
-   whole unit: copy a unit block. No coding needed beyond this
-   file. Card types you can use:
+   Written to actually teach: explain the real mechanism, use a
+   trade example only where it sharpens the point. Difficulty
+   ramps up within each unit.
 
-     info      → a teaching card (no scoring). { type:'info', title, body }
-     choice    → multiple choice.  { type:'choice', q, options:[], answer:<index>, explain }
-     truefalse → "Tip or Trap".    { type:'truefalse', q, isTrue:true|false, explain }
-     match     → match the pairs.  { type:'match', q, pairs:[[a,b],...], explain }
-     order     → put in order.     { type:'order', q, steps:[...in correct order], explain }
+   Card types:
+     info      → { type:'info', title, body }
+     choice    → { type:'choice', q, options:[], answer:<index>, explain }
+     truefalse → { type:'truefalse', q, isTrue:true|false, explain }
+     match     → { type:'match', q, pairs:[[a,b],...], explain }
+     order     → { type:'order', q, steps:[...correct order], explain }
    ============================================================ */
 
 const COURSE = {
   units: [
-    /* ===================== UNIT 1 ===================== */
+    /* ===================== UNIT 1 — AI BASICS ===================== */
     {
       id: 'u1',
       title: 'AI Basics',
-      subtitle: 'Start here — no jargon',
+      subtitle: 'How these tools actually work',
       color: '#FF6A00',
       icon: '🤖',
       locked: false,
       lessons: [
-        /* ---- Lesson 1 ---- */
+        /* ---- u1l1 ---- */
         {
           id: 'u1l1',
-          title: 'What even is AI?',
-          icon: '👋',
+          title: 'What AI actually is',
+          icon: '🧠',
           xp: 20,
           cards: [
             {
               type: 'info',
-              title: 'Gidday — let’s clear this up',
-              body: 'AI like <b>ChatGPT</b> and <b>Claude</b> is basically a computer you can talk to in plain English. It’s read a huge chunk of the internet, so it can answer questions, write stuff, and explain things — like a smart mate who never knocks off.'
+              title: 'It predicts — it doesn’t look things up',
+              body: 'ChatGPT and Claude are <b>large language models</b> (LLMs). They were trained on a huge amount of human writing and learned the patterns in it — which words and ideas tend to follow which. When you ask something, the model isn’t pulling an answer from a database. It builds the reply a piece at a time, each step predicting the most likely next bit of text. That one idea — <b>it predicts, it doesn’t retrieve</b> — explains nearly everything it does.'
             },
             {
               type: 'choice',
-              q: 'What’s the best way to think about ChatGPT?',
+              q: 'So how does an LLM actually produce an answer?',
               options: [
-                'A search engine like Google',
-                'A smart mate you chat to in plain English',
-                'A robot that does the plumbing for you'
-              ],
-              answer: 1,
-              explain: 'It chats back in plain English and writes things for you. It’s not just Google — and it definitely won’t crimp your PEX.'
-            },
-            {
-              type: 'truefalse',
-              q: 'AI can write a customer email, explain a building rule, and draft a quote — all in seconds.',
-              isTrue: true,
-              explain: 'Spot on. That office-type work is exactly what it’s quick at.'
-            },
-            {
-              type: 'choice',
-              q: 'Which of these is an AI chat app you can talk to?',
-              options: ['Xero', 'ChatGPT', 'Trade Me'],
-              answer: 1,
-              explain: 'ChatGPT is the AI chat app. The others are great tools — just not the AI you have a yarn with.'
-            },
-            {
-              type: 'truefalse',
-              q: 'Out of the box, the AI already knows you, your mates, and all your job history.',
-              isTrue: false,
-              explain: 'Trap! By default it only knows what you type into the chat. Fresh chat = mostly a blank slate.'
-            },
-            {
-              type: 'choice',
-              q: 'Your apprentice asks “what can this AI thing actually do for me?” Best answer?',
-              options: [
-                'Write emails, explain things, and draft quotes',
-                'Replace your hands on the tools',
-                'Nothing useful for a tradie'
+                'It predicts the most likely next words from patterns it learned across huge amounts of text',
+                'It searches the web and pastes the best result',
+                'It stores every fact it read and looks the answer up'
               ],
               answer: 0,
-              explain: 'It’s a hand with the wordy/office jobs — emails, explaining, drafting. The tools are still yours.'
+              explain: 'It generates, word by word. That’s why it can write a quote for a job it’s never seen — and also why it can be confidently wrong.'
+            },
+            {
+              type: 'info',
+              title: 'Why it sometimes makes things up',
+              body: 'Because it predicts <b>plausible</b> text rather than retrieving <b>verified</b> facts, it can produce something that sounds dead right but isn’t — a made-up statistic, a Building Code clause number that doesn’t exist. This is a <b>hallucination</b>. It’s not lying; the model has no built-in sense of true vs false. It’s aiming for “a likely, well-formed answer”, not “a correct one”.'
+            },
+            {
+              type: 'choice',
+              q: 'Why can it state a wrong fact with total confidence?',
+              options: [
+                'It generates plausible-sounding text, not checked facts — it optimises for “likely”, not “true”',
+                'It’s deliberately lying to you',
+                'It’s broken and needs reinstalling'
+              ],
+              answer: 0,
+              explain: 'The fluency and the confidently-wrong problem come from the same place. So anything with risk attached — prices, codes, compliance — you treat as a sharp first draft and verify.'
+            },
+            {
+              type: 'info',
+              title: 'It has a use-by date',
+              body: 'A model’s core training stops at a certain point, so on its own it doesn’t know anything after that — last week’s price rise, a rule that changed last month. Some versions can search the web to fill the gap. If yours can’t, assume its knowledge has an expiry date and check current facts yourself.'
+            },
+            {
+              type: 'truefalse',
+              q: 'An AI with no web access will always know about a regulation that changed last month.',
+              isTrue: false,
+              explain: 'Its training likely predates the change. No web access = no idea it happened. Verify recent facts against the real source.'
             }
           ]
         },
 
-        /* ---- Lesson 2 ---- */
+        /* ---- u1l2 ---- */
         {
           id: 'u1l2',
-          title: 'Your first chat',
+          title: 'How a conversation works',
           icon: '💬',
           xp: 20,
           cards: [
             {
               type: 'info',
-              title: 'It’s just texting',
-              body: 'Using AI is like texting a mate. You open the app or website, type your question, hit send, and read what comes back. Don’t like the answer? Just tell it what to fix and it’ll have another crack.'
+              title: 'It can “see” the whole chat — until you start a new one',
+              body: 'As you go, the model keeps the whole conversation in view — your messages and its replies. That running history is its <b>context</b>. It’s why you can refine: “shorter”, “more formal”, “you forgot the GST” — it adjusts because it can see what came before. Start a <b>new chat</b>, though, and that context is gone. By default it doesn’t carry memory from one chat to the next.'
             },
             {
-              type: 'order',
-              q: 'Put the steps in order to get your first answer:',
-              steps: [
-                'Open ChatGPT (app or website)',
-                'Type your question in plain English',
-                'Hit send',
-                'Read the answer',
-                'Ask a follow-up if it’s not quite right'
+              type: 'choice',
+              q: 'You send four follow-ups and each reply gets closer to what you want. Why?',
+              options: [
+                'It can see the whole thread (the context) and adjusts to your corrections',
+                'It’s learning permanently and will remember this forever',
+                'It’s guessing randomly until one sticks'
               ],
-              explain: 'That’s the whole loop. Type, send, read, tweak. Easy as.'
+              answer: 0,
+              explain: 'Within a chat it works off the full thread. That’s the loop: ask, read, correct, repeat.'
             },
             {
               type: 'truefalse',
-              q: 'You need special computer code or commands to talk to AI.',
+              q: 'By default, a brand-new chat remembers everything from a chat you had last week.',
               isTrue: false,
-              explain: 'Trap! Just type like you’d talk. “Write me a text to a customer” works perfectly.'
+              explain: 'Fresh chat = clean slate, unless you’re using a “memory” feature or a saved Project. Useful to know: if a chat goes off the rails, just start a new one.'
+            },
+            {
+              type: 'info',
+              title: 'There’s a limit to how much it can hold',
+              body: 'The context isn’t infinite — there’s a ceiling on how much text it can keep in view at once (you’ll hear this called the <b>context window</b>). In a very long chat, the earliest stuff can effectively drop off the back. For a big task, it’s often cleaner to start fresh and paste in just what matters.'
             },
             {
               type: 'choice',
-              q: 'The answer’s close but too formal and long. What do you do?',
+              q: 'A chat has gone for hours and it starts forgetting early details. Best move?',
               options: [
-                'Start a brand new chat and give up',
-                'Reply: “Make it shorter and more casual”',
-                'Accept it as-is, nothing you can do'
+                'Start a fresh chat and paste in just the key info it needs',
+                'Keep going and hope it remembers',
+                'Give up — it’s maxed out forever'
               ],
-              answer: 1,
-              explain: 'Just tell it what to change. AI is happy to redo it 100 times — no eye-rolls.'
-            },
-            {
-              type: 'choice',
-              q: 'Which is a perfectly good thing to type into AI?',
-              options: [
-                'EXECUTE.QUERY( customer_email )',
-                'Write a friendly text telling my customer I’m running 20 min late',
-                'You must use exact keywords only'
-              ],
-              answer: 1,
-              explain: 'Plain English, like talking to a person. That’s all it needs.'
-            },
-            {
-              type: 'truefalse',
-              q: 'You can keep the conversation going — ask follow-ups and it remembers what you said earlier in that chat.',
-              isTrue: true,
-              explain: 'Yep. Within the same chat it follows the thread, so you can refine as you go.'
+              answer: 0,
+              explain: 'You’ve filled the context window. A clean chat with the essential details beats a bloated one.'
             }
           ]
         },
 
-        /* ---- Lesson 3 ---- */
+        /* ---- u1l3 ---- */
         {
           id: 'u1l3',
-          title: 'Prompts 101',
+          title: 'How prompting works',
           icon: '🎯',
           xp: 25,
           cards: [
             {
               type: 'info',
-              title: 'A “prompt” is just your instruction',
-              body: 'The thing you type is called a <b>prompt</b>. The trick: be specific and give it context. A good prompt usually has three bits — <b>who/what the situation is</b>, <b>the job you want done</b>, and <b>how you want it back</b> (short, friendly, a list, etc).'
-            },
-            {
-              type: 'choice',
-              q: 'Which prompt will get you a better result?',
-              options: [
-                'Write an email',
-                'Write a short, friendly email to a customer saying the parts are delayed a week, and apologise'
-              ],
-              answer: 1,
-              explain: 'The second one gives context (delayed parts), the job (email), and the style (short, friendly). Specific = better.'
+              title: 'A prompt is context that steers the prediction',
+              body: 'Since the model predicts based on what it’s been given, the prompt is you <b>steering</b> it. Vague prompt → it fills the gaps with generic assumptions. Specific prompt → it conditions on your actual situation and the answer narrows to fit. A strong prompt usually has four parts: a <b>role</b>, the <b>task</b>, the <b>specifics</b>, and the <b>format</b> you want back.'
             },
             {
               type: 'match',
-              q: 'Match each part of a good prompt to an example:',
+              q: 'Match each part of a strong prompt to an example:',
               pairs: [
-                ['Context', 'I’m a plumber, customer’s hot water’s out'],
-                ['The job', 'Write a text to book them in tomorrow'],
-                ['How you want it', 'Keep it short and friendly']
+                ['Role', '“You’re an experienced plumber…”'],
+                ['Task', '“…write a follow-up text to a customer”'],
+                ['Specifics', '“…the quote was $4,200, sent 8 days ago”'],
+                ['Format', '“…keep it to 3 short lines, friendly”']
               ],
-              explain: 'Context + the job + how you want it back. Nail those three and the answer’s usually bang on.'
-            },
-            {
-              type: 'truefalse',
-              q: 'Telling the AI “you’re a plumber writing to a customer” helps it give a better answer.',
-              isTrue: true,
-              explain: 'Giving it a role and context sharpens the answer every time.'
+              explain: 'Each part removes guesswork. Together they pin the answer to your job instead of a generic one.'
             },
             {
               type: 'choice',
-              q: 'You want a 3-line quote follow-up text. Best prompt?',
+              q: 'Why does “Write a 3-line friendly reminder about the $4,200 quote I sent last week” beat “write a follow-up”?',
               options: [
-                'Quote stuff',
-                'Write a polite 3-line text following up on the quote I sent last week, asking if they’d like to go ahead',
-                'Follow up'
+                'The detail conditions the model on your exact situation, so it predicts a fitting answer instead of a generic guess',
+                'Longer prompts always score higher with the AI',
+                'It makes the AI try harder out of politeness'
               ],
-              answer: 1,
-              explain: 'It states the job, the length (3 lines), the tone (polite), and the goal. That’s a strong prompt.'
+              answer: 0,
+              explain: 'It’s not about length — it’s about relevant context. More of the right detail in = a tighter answer out.'
             },
             {
-              type: 'order',
-              q: 'Order these from worst to best prompt:',
-              steps: [
-                'Email',
-                'Write an email to a customer',
-                'Write a short friendly email to a customer about a delayed job, and apologise'
-              ],
-              explain: 'Each step adds context and detail. More detail (within reason) = better answer.'
+              type: 'truefalse',
+              q: 'Telling it the format you want (“a bullet list”, “3 lines”, “a formal email”) reliably changes what you get.',
+              isTrue: true,
+              explain: 'Format is part of the steering. Spell out length, tone and structure and it’ll match them.'
             }
           ]
         },
 
-        /* ---- Lesson 4 ---- */
+        /* ---- u1l4 ---- */
         {
           id: 'u1l4',
-          title: 'Good vs bad prompts',
+          title: 'Why prompts fail',
           icon: '🔧',
           xp: 25,
           cards: [
             {
               type: 'info',
-              title: 'Time to sharpen up',
-              body: 'Now you know the three bits, let’s get an eye for it. Spotting a strong prompt is half the battle — same as eyeballing a dodgy fitting before it leaks.'
+              title: 'Most bad answers trace back to the prompt',
+              body: 'Three common faults: (1) <b>too vague</b> — it fills gaps with safe, generic assumptions; (2) <b>no constraints</b> — you didn’t say the length, tone, or what to avoid; (3) <b>no grounding</b> — you asked about your job but didn’t give it your details. Fixing the prompt fixes most “bad” answers.'
             },
             {
               type: 'choice',
-              q: 'A customer left a grumpy review. You want a calm reply. Best prompt?',
+              q: 'It gave a generic, waffly answer about your job. The most likely fix?',
               options: [
-                'Reply to review',
-                'Write a calm, professional reply to this 1-star review, apologising and offering to make it right: “[paste review]”',
-                'Tell them they’re wrong'
+                'Add your real specifics and say exactly what you want',
+                'Send the identical prompt again and hope',
+                'Switch it off — it can’t do this'
               ],
-              answer: 1,
-              explain: 'It sets the tone (calm, professional), the goal (apologise + fix), and gives the actual review to work from.'
+              answer: 0,
+              explain: 'Generic in, generic out. Ground it in your details and constrain the output.'
             },
             {
-              type: 'truefalse',
-              q: 'Pasting the actual details (the review, the job, the numbers) into your prompt gives a better answer.',
-              isTrue: true,
-              explain: 'AI can only work with what you give it. More real detail in = more useful out.'
+              type: 'info',
+              title: 'Give it permission to say “I don’t know”',
+              body: 'A useful trick against hallucination: add “if you’re not sure, say so, and don’t make up numbers or references.” Left to its own devices the model will produce a confident answer regardless. Telling it that <b>uncertainty is an acceptable answer</b> noticeably cuts the made-up stuff.'
             },
             {
               type: 'choice',
-              q: 'Which prompt is missing the “how you want it back” part?',
+              q: 'Which addition most reduces the risk of it inventing a fake standard or figure?',
               options: [
-                'Write a short text reminding the customer about tomorrow’s 9am job',
-                'Write something for the customer about tomorrow',
-                'Write a friendly 2-line reminder text for tomorrow’s 9am job'
+                '“If you’re not certain, say so — don’t make up references or numbers.”',
+                '“Please be 100% accurate.”',
+                '“Answer fast.”'
               ],
-              answer: 1,
-              explain: 'Option 2 is vague — no length, no tone, no specifics. The others tell it exactly how you want it.'
-            },
-            {
-              type: 'match',
-              q: 'Match the weak prompt to its fix:',
-              pairs: [
-                ['“Write a quote”', 'Add what the job is and the price'],
-                ['“Make it good”', 'Say the tone you want — friendly, formal'],
-                ['“Email the customer”', 'Add why you’re emailing them']
-              ],
-              explain: 'Every weak prompt gets better by adding context and saying how you want it back.'
+              answer: 0,
+              explain: 'Giving it an honest “out” works far better than ordering it to be accurate. It can’t will itself correct, but it can flag doubt when you allow it.'
             },
             {
               type: 'truefalse',
-              q: 'If the first answer isn’t great, your prompt was probably too vague.',
+              q: 'Telling the model what NOT to do (e.g. “no jargon, don’t exceed 100 words”) is a valid way to steer it.',
               isTrue: true,
-              explain: 'Usually, yeah. Add detail and ask again — the answer follows your prompt.'
+              explain: 'Negative constraints are legit steering. Boundaries shape the output as much as the main instruction.'
             }
           ]
         },
 
-        /* ---- Lesson 5 ---- */
+        /* ---- u1l5 ---- */
         {
           id: 'u1l5',
-          title: 'Don’t get burned',
+          title: 'Trust, privacy & verifying',
           icon: '🦺',
           xp: 30,
           cards: [
             {
               type: 'info',
-              title: 'AI is a power tool, not a boss',
-              body: 'AI is mega useful but it can be <b>confidently wrong</b> — it sometimes makes stuff up (called a “hallucination”). And don’t paste private info into it. You’re still the tradie who signs off. Treat it like a keen apprentice: great help, but you check the work.'
-            },
-            {
-              type: 'truefalse',
-              q: 'AI can state a wrong fact while sounding 100% sure of itself.',
-              isTrue: true,
-              explain: 'Yep — that’s a hallucination. For codes, prices, and legal stuff, always double-check.'
+              title: 'Ground it, then check it',
+              body: 'The single best way to get accurate answers: <b>give it the source</b>. Paste the actual spec, the real email, the council PDF, and ask it to work only from that. It’s far less likely to invent things when it’s summarising material you handed it than when it’s answering from memory. For anything that carries risk, also ask it to point to where in the document the answer came from.'
             },
             {
               type: 'choice',
-              q: 'AI gives you an exact NZ Building Code clause number for a quote. What now?',
+              q: 'Which approach gives the most reliable answer about a 40-page spec?',
               options: [
-                'Copy it straight to the customer — she’ll be right',
-                'Double-check it against the actual code before you rely on it',
-                'Never use AI again'
+                'Upload the spec and ask it to answer only from that document',
+                'Ask from memory and hope it’s read that exact spec',
+                'Ask it to guess the likely contents'
               ],
-              answer: 1,
-              explain: 'Use it as a starting point, then verify anything official. Trust but check.'
-            },
-            {
-              type: 'truefalse',
-              q: 'It’s fine to paste a customer’s credit card or bank details into a public AI chat.',
-              isTrue: false,
-              explain: 'Big trap! Never paste private info — card numbers, passwords, anything sensitive. Keep that out of it.'
-            },
-            {
-              type: 'choice',
-              q: 'Which job is AI safest and most useful for?',
-              options: [
-                'Signing off a gas certification for you',
-                'Drafting a friendly email you’ll read before sending',
-                'Storing your customers’ bank logins'
-              ],
-              answer: 1,
-              explain: 'Drafting things you review = perfect. Anything official or private = your call, not the AI’s.'
-            },
-            {
-              type: 'match',
-              q: 'Match the situation to the smart move:',
-              pairs: [
-                ['AI quotes a price', 'Check it against real supplier prices'],
-                ['AI writes an email', 'Read it, tweak, then send'],
-                ['AI gives a code clause', 'Verify against the official code']
-              ],
-              explain: 'Same rule every time: let AI do the first draft, you do the final check.'
+              answer: 0,
+              explain: 'Grounding it in the real document is the difference between “summarising” and “making it up”.'
             },
             {
               type: 'info',
-              title: 'You’ve finished AI Basics! 🎉',
-              body: 'You now get what AI is, how to chat to it, how to write a solid prompt, and how to stay safe. That’s the foundation. Next units put it to work on your <b>business</b>, <b>on the tools</b>, and <b>winning jobs</b>.'
+              title: 'Assume what you type can be seen',
+              body: 'On consumer (free/personal) versions, what you type may be used to help improve the model unless you’ve turned that off in settings. Business and enterprise versions usually don’t train on your data. The safe rule regardless: never paste genuinely sensitive stuff — customer bank details, passwords, anything you wouldn’t want leaving your control.'
+            },
+            {
+              type: 'truefalse',
+              q: 'It’s fine to paste a customer’s card number into a personal ChatGPT account to “sort the invoice”.',
+              isTrue: false,
+              explain: 'No. Treat sensitive data as off-limits. Use it for the wording and structure, keep the private numbers out.'
+            },
+            {
+              type: 'choice',
+              q: 'AI hands you an exact NZ Building Code clause for a customer doc. The professional move?',
+              options: [
+                'Verify the clause against the actual code before relying on it',
+                'Copy it straight in — it sounded specific',
+                'Never reference codes again'
+              ],
+              answer: 0,
+              explain: 'Specific-sounding is exactly how a hallucination looks. Use it as a pointer, confirm the real thing.'
+            },
+            {
+              type: 'info',
+              title: 'You’ve got the mental model',
+              body: 'It predicts rather than retrieves; it holds a conversation within a context window; you steer it with a good prompt; it can be confidently wrong, so you ground and verify. That’s the foundation most people never learn. Next unit: getting noticeably better results on purpose.'
             }
           ]
         }
       ]
     },
 
-    /* ===================== UNIT: AI MEDIUM ===================== */
+    /* ===================== UNIT 2 — AI MEDIUM ===================== */
     {
       id: 'umed',
       title: 'AI Medium',
-      subtitle: 'Level up — get better answers',
+      subtitle: 'Getting better results on purpose',
       color: '#F4A100',
       icon: '📈',
       locked: false,
       lessons: [
         {
-          id: 'umed1', title: 'Ready to level up', icon: '📈', xp: 20,
+          id: 'umed1', title: 'From asking to steering', icon: '📈', xp: 20,
           cards: [
-            { type: 'info', title: 'Ready to level up?', body: 'You’ve got the basics. Now a few tricks that take you from “okay” answers to “bloody spot on” — the difference between rushing a job and doing it proper.' },
-            { type: 'choice', q: 'What turns okay AI answers into great ones?', options: ['Giving it more context and direction', 'Asking louder', 'Pure luck'], answer: 0, explain: 'The more you steer it, the better it lands. Direction beats hope.' },
-            { type: 'truefalse', q: 'Small changes to how you ask can make a big difference to what you get back.', isTrue: true, explain: 'Spot on — how you ask shapes what you get.' }
+            { type: 'info', title: 'The input is the lever', body: 'At this level the mindset shifts from “ask a question” to “engineer the input”. The model’s output quality is mostly downstream of what you feed it: the role, the context, the examples, the constraints. Same model, very different results — depending on how well you set it up. The next few lessons are the highest-leverage techniques, and <i>why</i> each one works.' },
+            { type: 'choice', q: 'Two people use the exact same AI and get very different quality. The biggest factor is usually…', options: ['How well they set up the input (context, examples, constraints)', 'Who pays more', 'Random luck on the day'], answer: 0, explain: 'The model is the same. The setup is the variable you control.' },
+            { type: 'truefalse', q: 'A better-engineered prompt can outperform a “smarter” model fed a lazy prompt.', isTrue: true, explain: 'Often, yes. Good input beats raw horsepower wasted on a vague ask.' }
           ]
         },
         {
-          id: 'umed2', title: 'Give it a role', icon: '🎭', xp: 25,
+          id: 'umed2', title: 'Roles & personas', icon: '🎭', xp: 25,
           cards: [
-            { type: 'info', title: 'Tell it who to be', body: 'Kick off your prompt by giving AI a role: “You’re an experienced NZ plumber writing to a customer…”. Putting it in the right hat instantly sharpens the answer.' },
-            { type: 'choice', q: 'Which gets a sharper answer?', options: ['“You’re an experienced sparky. Explain this fault simply to a customer.”', '“Explain this.”'], answer: 0, explain: 'The role + the job + who it’s for = a much better answer.' },
-            { type: 'truefalse', q: 'Telling AI to “act as a builder” helps it answer in the right way.', isTrue: true, explain: 'Give it a hat to wear and it talks the part.' },
-            { type: 'choice', q: 'You want a reply that sounds like a seasoned tradie. Start with…', options: ['“You’re a seasoned tradie…”', '“Hello computer”', 'Nothing in particular'], answer: 0, explain: 'Set the role first, then ask. Works a treat.' }
+            { type: 'info', title: 'Why a role works', body: 'Opening with “You’re an experienced NZ plumber writing to a homeowner…” does real work. It conditions the model toward the vocabulary, tone and assumptions of that role — it shifts the patterns it draws on. You’re not flattering it; you’re narrowing the slice of its training it leans on.' },
+            { type: 'choice', q: 'What is a role/persona prompt actually doing under the hood?', options: ['Steering the model toward the language and assumptions tied to that role', 'Giving the model a real job title', 'Making it legally responsible for the answer'], answer: 0, explain: 'It conditions the prediction. “Explain like I’m a first-year apprentice” vs “…to a building inspector” produces genuinely different answers.' },
+            { type: 'truefalse', q: 'Adding the audience (“…explained to a homeowner with no trade knowledge”) changes the output as much as the role does.', isTrue: true, explain: 'Role + audience together are two of the strongest, cheapest levers you have.' },
+            { type: 'choice', q: 'When does a role prompt help LEAST?', options: ['A simple factual lookup with one right answer (“convert 3/4 inch to mm”)', 'Drafting a customer email', 'Explaining a concept to a specific audience'], answer: 0, explain: 'Roles shape tone and judgement. For a single hard fact, they add little — just ask plainly.' }
           ]
         },
         {
-          id: 'umed3', title: 'Show, don’t tell', icon: '🧩', xp: 25,
+          id: 'umed3', title: 'Show it examples', icon: '🧩', xp: 25,
           cards: [
-            { type: 'info', title: 'Give it an example', body: 'Want it to match your style? Paste an example. “Here’s a quote I sent last time — write the new one the same way.” AI copies the pattern. Showing beats explaining.' },
-            { type: 'truefalse', q: 'Pasting an example of how you like things helps AI match your style.', isTrue: true, explain: 'Give it a sample to copy and it nails your style.' },
-            { type: 'choice', q: 'Best way to get AI to write in your style?', options: ['Show it an example you’ve done before', 'Hope it guesses right', 'Use big fancy words'], answer: 0, explain: 'One real example does more than a paragraph of instructions.' }
+            { type: 'info', title: 'Examples teach it the pattern on the spot', body: 'Paste one or two examples of what “good” looks like — a past quote, a text you’d send — and ask for more in the same style. The model picks up the pattern from your examples and copies it. This is called <b>in-context learning</b>: you’re not retraining anything, you’re showing it the target inside the prompt. It’s the most reliable way to control format and tone.' },
+            { type: 'choice', q: 'You paste two of your past quotes and ask for a third “like these”. Why does this work so well?', options: ['It copies the pattern from your examples (in-context learning)', 'It permanently memorises your quoting style', 'It emails your old quotes to the customer'], answer: 0, explain: 'Showing beats telling. A real example carries more signal than a paragraph describing what you want.' },
+            { type: 'truefalse', q: 'Giving examples is especially powerful when you need a consistent FORMAT every time.', isTrue: true, explain: 'Format and tone are exactly what examples lock in — better than any description.' },
+            { type: 'match', q: 'Match the goal to the better technique:', pairs: [['Match my exact quote layout', 'Show 1–2 examples'], ['Get the right tone of voice', 'Show an example + name the audience'], ['One quick fact', 'Just ask plainly']], explain: 'Right technique for the job. Examples for pattern, plain ask for facts.' }
           ]
         },
         {
-          id: 'umed4', title: 'Feed it your stuff', icon: '📎', xp: 25,
+          id: 'umed4', title: 'Ground it in your data', icon: '📎', xp: 25,
           cards: [
-            { type: 'info', title: 'Give it the goods', body: 'AI can only work with what it’s got. Upload the actual PDF, paste the real numbers, attach the photo. The more of YOUR real info you give it, the more the answer fits your job — not some generic one.' },
-            { type: 'truefalse', q: 'Uploading the real spec/photo/numbers beats just describing them.', isTrue: true, explain: 'Real detail in = useful answer out.' },
-            { type: 'choice', q: 'AI’s answer is too generic. Likely fix?', options: ['Give it your real details and files', 'Ask the exact same thing again', 'Give up on it'], answer: 0, explain: 'Generic in, generic out. Feed it the real goods.' }
+            { type: 'info', title: 'Make it answer from YOUR material', body: 'The strongest defence against made-up answers is <b>grounding</b>: give it the actual document, numbers or photos and tell it to answer only from those. Now it’s reading and summarising your material instead of guessing from memory. This is the same idea big “chat with your documents” tools use under the hood — feed in the relevant source, then ask.' },
+            { type: 'truefalse', q: 'Uploading the real spec and asking it to work only from that reduces hallucination compared with asking from memory.', isTrue: true, explain: 'Hugely. It can only summarise what’s in front of it, so there’s far less room to invent.' },
+            { type: 'choice', q: 'Best way to get an accurate summary of a council consent document?', options: ['Paste/upload the document and say “answer only from this; quote the section”', 'Describe it roughly and ask what it probably says', 'Ask for its best guess'], answer: 0, explain: 'Ground it, and ask it to cite the section so you can check.' },
+            { type: 'choice', q: 'Why also ask it to “point to where in the document the answer is”?', options: ['It lets you verify fast and discourages it from inventing', 'It makes the answer longer', 'It’s required by law'], answer: 0, explain: 'Citations turn a black-box answer into one you can check in seconds.' }
           ]
         },
         {
-          id: 'umed5', title: 'Don’t take answer #1', icon: '🔁', xp: 25,
+          id: 'umed5', title: 'Iterate & make it think', icon: '🔁', xp: 25,
           cards: [
-            { type: 'info', title: 'First go isn’t the final go', body: 'The first answer’s a draft, not gospel. Push back: “shorter”, “more formal”, “give me 3 options”, “you forgot the GST”. AI will happily redo it till it’s right — no sulking.' },
-            { type: 'choice', q: 'First answer’s close but too long. Best move?', options: ['Reply “make it shorter”', 'Just accept it', 'Scrap it and start over'], answer: 0, explain: 'Tweak it with a quick follow-up. Don’t start from scratch.' },
-            { type: 'truefalse', q: 'Asking for “3 options” is a good way to get a better result.', isTrue: true, explain: 'Pick the best or mix them. Options beat one-and-done.' }
+            { type: 'info', title: 'First answer = draft. Push it.', body: 'Treat the first reply as a starting point. Three high-value moves: ask for <b>options</b> (“give me 3 versions, different tones”); ask it to <b>show its working</b> on anything with steps or numbers (“work through it step by step”) — this genuinely improves accuracy on reasoning; and ask it to <b>check itself</b> (“review that for errors or anything you assumed”).' },
+            { type: 'choice', q: 'For a multi-step calculation, adding “work through it step by step” tends to…', options: ['Improve accuracy, because it reasons through the steps instead of jumping to an answer', 'Slow it down for no benefit', 'Make it refuse'], answer: 0, explain: 'Forcing the working out is a real technique (you’ll hear “chain of thought”). It catches errors a snap answer misses.' },
+            { type: 'truefalse', q: 'Asking the model to critique its own previous answer can surface mistakes and weak assumptions.', isTrue: true, explain: 'Self-review is cheap and effective. “What did you assume? What might be wrong here?”' },
+            { type: 'choice', q: 'You want the best wording for an important email. Smartest ask?', options: ['“Give me 3 versions with different tones, then we’ll refine the best one.”', '“Write it.” then send the first thing', '“Make it perfect.”'], answer: 0, explain: 'Options + refinement beats one-and-done. You stay the editor.' }
           ]
         },
         {
-          id: 'umed6', title: 'Save your winners', icon: '💾', xp: 30,
+          id: 'umed6', title: 'Build a prompt kit', icon: '💾', xp: 30,
           cards: [
-            { type: 'info', title: 'Keep what works', body: 'Found a prompt that nails your quotes? Save it and reuse it. And always sense-check the important stuff — prices, codes, dates. AI does the heavy lifting; you sign it off.' },
-            { type: 'truefalse', q: 'Reusing a prompt that worked well saves time on jobs you do often.', isTrue: true, explain: 'Build up a little kit of go-to prompts.' },
-            { type: 'choice', q: 'AI gives you a price and a code clause for a customer. Before sending…', options: ['Sense-check the price and clause', 'Fire it off as-is', 'Never check anything'], answer: 0, explain: 'Trust but verify — same as checking a fitting before you wall it up.' },
-            { type: 'info', title: 'You’ve levelled up! 📈', body: 'Roles, examples, your real info, pushing back, and saving winners. That’s the medium tier sorted. Ready for the pro moves? Have a crack at <b>AI High Level</b>.' }
+            { type: 'info', title: 'Reuse what works — and know it varies', body: 'When a prompt nails it, save it. Over time you build a little kit of go-to prompts for the jobs you do weekly (quotes, follow-ups, reviews). One thing to expect: the same prompt can give slightly different answers each time — there’s deliberate variation built in. That’s normal, not a bug; it’s why “give me 3 options” works.' },
+            { type: 'truefalse', q: 'Running the same prompt twice can produce two different answers.', isTrue: true, explain: 'There’s built-in randomness so it doesn’t parrot the same line every time. Handy for variety; worth knowing when you expected identical output.' },
+            { type: 'choice', q: 'The real payoff of saving your best prompts is…', options: ['Consistent, fast results on the jobs you repeat', 'The AI remembers you', 'It costs less'], answer: 0, explain: 'A reusable prompt is a small tool you sharpen once and use forever.' },
+            { type: 'info', title: 'Medium tier: done', body: 'Roles, examples (in-context learning), grounding, making it reason, iterating, and a reusable kit. You’re now ahead of most people using these tools. Next: the pro stuff — assistants, tools, automations and agents.' }
           ]
         }
       ]
     },
 
-    /* ===================== UNIT: AI HIGH LEVEL ===================== */
+    /* ===================== UNIT 3 — AI HIGH LEVEL ===================== */
     {
       id: 'uhigh',
       title: 'AI High Level',
-      subtitle: 'Pro moves & automations',
+      subtitle: 'Assistants, tools, agents',
       color: '#34495E',
       icon: '🚀',
       locked: false,
       lessons: [
         {
-          id: 'uhigh1', title: 'Going pro', icon: '🚀', xp: 25,
+          id: 'uhigh1', title: 'From tool to system', icon: '🚀', xp: 25,
           cards: [
-            { type: 'info', title: 'Welcome to the deep end', body: 'This is where AI stops being a chat and starts being a worker — custom assistants, connected apps, and jobs that run themselves. Don’t stress if it’s a lot; you don’t need all of it. Take what’s useful and leave the rest.' },
-            { type: 'choice', q: 'What’s the theme of “high level” AI?', options: ['AI that does whole jobs, not just answers', 'Just bigger words', 'Only being expensive'], answer: 0, explain: 'Pro-level = AI doing real work, end to end.' },
-            { type: 'truefalse', q: 'You don’t have to use every advanced feature — pick what helps your business.', isTrue: true, explain: 'Use what saves you time. Ignore the rest.' }
+            { type: 'info', title: 'Stop chatting, start building', body: 'So far it’s been you typing to a chat. The leap now: package your instructions so the behaviour is <b>reusable</b>, give the model <b>tools</b> so it can fetch real data and take actions, and put it in a <b>loop</b> so it can do multi-step jobs on its own. Same underlying model — wrapped in a system that does work. You won’t need all of it; you’ll know which pieces fit your business.' },
+            { type: 'choice', q: 'The core shift at “high level” is…', options: ['Wrapping the model in instructions, tools and loops so it does whole jobs', 'Typing faster', 'Paying for the biggest model'], answer: 0, explain: 'The model is one component. The system around it is where the real leverage is.' },
+            { type: 'truefalse', q: 'You should adopt every advanced feature to get value.', isTrue: false, explain: 'Pick the few that save you real time. Ignore the rest until they’re useful.' }
           ]
         },
         {
           id: 'uhigh2', title: 'Build your own assistant', icon: '🛠️', xp: 30,
           cards: [
-            { type: 'info', title: 'Make it yours', body: 'Instead of explaining yourself each time, set up your own assistant: a <b>Custom GPT</b> (ChatGPT) or a <b>Project / Skill</b> (Claude) loaded with your rates, style and rules. Now it’s a mini-staffer that already knows your business.' },
-            { type: 'choice', q: 'A Custom GPT or Claude Project loaded with your info is like…', options: ['A mini-staffer that knows your business', 'A brand new ute', 'A fax machine'], answer: 0, explain: 'Set it up once; it remembers your way of doing things forever.' },
-            { type: 'truefalse', q: 'Your own assistant means less re-explaining and more consistent results.', isTrue: true, explain: 'Consistency without the repetition — that’s the win.' }
+            { type: 'info', title: 'Package the instructions + the knowledge', body: 'A <b>Custom GPT</b> (ChatGPT) or a <b>Project / Skill</b> (Claude) is a reusable assistant. Two ingredients: a <b>system instruction</b> — standing rules it follows every time (“You quote for KPA Plumbing. Always itemise labour and materials, add 5% P&G, use a friendly-but-professional tone”) — and <b>knowledge</b> you attach (rate cards, past quotes, your terms). Now every chat starts already knowing your business, instead of you re-explaining it.' },
+            { type: 'choice', q: 'What’s the “system instruction” of a custom assistant?', options: ['Standing rules it applies to every conversation automatically', 'A one-off message you send once', 'The customer’s reply'], answer: 0, explain: 'It’s the always-on brief. Set the rules once; they apply every time without you repeating them.' },
+            { type: 'truefalse', q: 'Attaching your rate card and past quotes as “knowledge” makes its answers fit your business without you pasting them each time.', isTrue: true, explain: 'That attached knowledge is what makes it <i>yours</i> rather than generic.' },
+            { type: 'choice', q: 'Biggest benefit of a custom assistant over a plain chat?', options: ['Consistent results and no re-explaining your business every time', 'It’s cheaper per message', 'It types faster'], answer: 0, explain: 'Consistency + zero setup each time. That’s the whole point of packaging it.' }
           ]
         },
         {
-          id: 'uhigh3', title: 'Connect your apps', icon: '🔌', xp: 30,
+          id: 'uhigh3', title: 'Tools & connectors', icon: '🔌', xp: 30,
           cards: [
-            { type: 'info', title: 'Hook it to your tools', body: 'Connect AI to the apps you run — Xero, Gmail, Drive, your calendar. Now it pulls your real numbers, drafts from real emails, and works with real files. This is where it goes from “clever” to “actually saves me hours a week”.' },
-            { type: 'truefalse', q: 'Connecting AI to Xero/Gmail lets it work with your real business data.', isTrue: true, explain: 'Real data in the loop = real time saved.' },
-            { type: 'choice', q: 'Why connect your apps to AI?', options: ['So it works with your real data, not made-up stuff', 'Just for decoration', 'No reason really'], answer: 0, explain: 'It can only help with what it can reach. Plug it in.' }
+            { type: 'info', title: 'Give it hands and live data', body: 'On its own the model only knows its training. Connect <b>tools</b> — Xero, Gmail, your calendar, a web search — and it can pull <b>real, current data</b> and take <b>actions</b>. Mechanically: the model decides a tool is needed, calls it, gets the result back, and continues. (Claude’s open standard for this is <b>MCP</b>; ChatGPT calls them actions/connectors.) This is the jump from “gives advice” to “gets things done”.' },
+            { type: 'truefalse', q: 'Connecting tools lets the model use real, up-to-date data instead of only its training.', isTrue: true, explain: 'A connected model can read your actual invoices today — not a guess from months ago.' },
+            { type: 'choice', q: 'When the model “calls a tool”, what’s happening?', options: ['It decides a tool is needed, runs it, reads the result, and carries on', 'It emails a human to do it', 'It pretends and makes up the data'], answer: 0, explain: 'Tool-calling is the model reaching out for real data or to perform an action mid-task.' },
+            { type: 'choice', q: 'A genuine risk to manage when AI can take actions in your apps?', options: ['It could act on a misunderstanding — so scope its access and review what matters', 'It uses more electricity', 'It gets bored'], answer: 0, explain: 'Hands mean responsibility. Give limited access, and keep a human check on anything that sends money or messages.' }
           ]
         },
         {
           id: 'uhigh4', title: 'Loops & automations', icon: '♾️', xp: 30,
           cards: [
-            { type: 'info', title: 'Set it and forget it', body: 'An <b>automation</b> is a job AI runs by itself when something triggers it. A <b>loop</b> is it doing that job again and again. Example: every invoice that hits 7 days overdue → AI drafts a polite chaser. Set up once, runs forever.' },
-            { type: 'choice', q: 'What’s an automation?', options: ['A job AI runs by itself on a trigger', 'A hand tool', 'A type of loan'], answer: 0, explain: 'Trigger happens → AI does the job. No you required.' },
-            { type: 'truefalse', q: 'Good use of a loop: automatically chase every overdue invoice the same way.', isTrue: true, explain: 'Repeating jobs are exactly what loops are for.' },
-            { type: 'choice', q: '“Set it up once, it runs forever” best describes…', options: ['An automation / loop', 'A single chat', 'A phone call'], answer: 0, explain: 'That’s the magic of automating the boring repeat jobs.' }
+            { type: 'info', title: 'A trigger, an action, repeated', body: 'An <b>automation</b> is the model wired into a pipeline: a <b>trigger</b> fires (a new invoice, 7 days passing, an email arriving), the model does a defined <b>task</b>, and something happens (a draft chaser, a tagged email). A <b>loop</b> just means it runs on every matching event. Set up once, runs forever. The skill is defining the trigger and the guardrails tightly so it does exactly the right thing.' },
+            { type: 'choice', q: 'A solid first automation for a trade business?', options: ['When an invoice hits 7 days overdue → draft a polite chaser for me to approve', 'Let AI send all money transfers unsupervised', 'Reply to every email instantly with no review'], answer: 0, explain: 'Clear trigger, useful task, human approves the send. That’s the safe, high-value pattern.' },
+            { type: 'truefalse', q: 'A good automation needs a clearly-defined trigger and guardrails, not just “do stuff”.', isTrue: true, explain: 'Vague automations misfire. Tight trigger + tight task + a review step on anything risky.' },
+            { type: 'choice', q: 'Why keep a human approval step on an automated customer email at first?', options: ['One bad assumption could go out 50 times before you notice — approval contains the blast radius', 'Customers prefer slow replies', 'The AI demands it'], answer: 0, explain: 'Automation multiplies both good and bad. Approve until you trust it, then loosen.' }
           ]
         },
         {
           id: 'uhigh5', title: 'Agents & harnesses', icon: '🤖', xp: 35,
           cards: [
-            { type: 'info', title: 'Agents that do the whole job', body: 'An <b>agent</b> is AI that doesn’t just answer — it works through a job step by step, using tools and checking itself, till it’s done. The <b>harness</b> is the setup around it that makes that possible: giving it tools, letting it loop, and keeping it on track. Think foreman running an apprentice, not just a chat.' },
-            { type: 'choice', q: 'What’s an AI “agent”?', options: ['AI that carries out a whole multi-step job, using tools', 'A travel agent', 'A single one-off answer'], answer: 0, explain: 'An agent works the job, not just talks about it.' },
-            { type: 'truefalse', q: 'An “agent harness” is the setup that lets an agent use tools, loop, and check its own work.', isTrue: true, explain: 'The harness is the scaffolding that turns a chatbot into a worker.' },
-            { type: 'truefalse', q: 'An agent is just a one-line answer with no tools.', isTrue: false, explain: 'Trap! An agent uses tools and works through steps — that’s the whole point.' }
+            { type: 'info', title: 'An agent is a model in a loop with tools and a goal', body: 'An <b>agent</b> doesn’t just answer — you give it a goal and it runs a loop: <i>look at the situation → decide the next step → use a tool → see the result → repeat</i>, until the goal’s met. The <b>harness</b> is the scaffolding around it: it provides the tools, runs the loop, sets stopping conditions, and checks the work. Claude Code and ChatGPT’s agent mode are harnesses. That structure is what turns a chatbot into something that completes a multi-step job.' },
+            { type: 'choice', q: 'What makes an agent different from a normal chat answer?', options: ['It runs a decide→act→observe loop with tools until a goal is reached', 'It just talks in a deeper voice', 'It answers one question and stops'], answer: 0, explain: 'Goal + tools + a loop. That’s the recipe for autonomous, multi-step work.' },
+            { type: 'truefalse', q: 'The “harness” is the system that gives the agent its tools, runs the loop, and decides when it’s done.', isTrue: true, explain: 'The model is the brain; the harness is the workshop, the tools and the foreman keeping it on task.' },
+            { type: 'choice', q: 'Agents can go wrong on long tasks mainly because…', options: ['Small errors compound across many steps if nothing checks the work', 'They get tired', 'They run out of words'], answer: 0, explain: 'Step 3’s mistake poisons steps 4–10. Good harnesses add verification and limits to catch drift early.' },
+            { type: 'choice', q: 'So the practical rule with agents is…', options: ['Great for multi-step grunt work, but scope it and verify the result', 'Trust it blindly with anything', 'Never useful'], answer: 0, explain: 'Powerful for the legwork; you still set the bounds and check the output.' }
           ]
         },
         {
-          id: 'uhigh6', title: 'Build your own tools', icon: '🧰', xp: 35,
+          id: 'uhigh6', title: 'Choosing the right model', icon: '🧰', xp: 35,
           cards: [
-            { type: 'info', title: 'Build your own gear', body: 'You can get AI to build you actual little tools — a job-cost calculator, a checklist app, a simple website — no coding needed (Claude calls these Artifacts). And know your models: heavier ones for hard thinking, quick ones for simple stuff.' },
-            { type: 'truefalse', q: 'You can get AI to build a working cost calculator without writing any code.', isTrue: true, explain: 'Describe it, it builds it. No code, no dramas.' },
-            { type: 'choice', q: 'For a quick, simple question, the smart move is…', options: ['Use a fast, cheap model', 'Always the biggest model', 'Don’t ask at all'], answer: 0, explain: 'Match the model to the job — big guns for hard problems, quick ones for easy asks.' },
-            { type: 'info', title: 'You’re flying now! 🚀', body: 'Custom assistants, connected apps, automations, agents, and your own tools — that’s pro-level AI. Keep an eye on the <b>Ideas</b> tab and request the deep-dives you want next.' }
+            { type: 'info', title: 'Match the model to the job', body: 'There’s a spread of models: bigger “reasoning” ones that think harder (slower, dearer) and lighter ones that are fast and cheap. The skill is matching them: a quick text reply doesn’t need the heavy reasoner; a tricky multi-part problem or a tender analysis does. Two other levers: the <b>context window</b> (how much you can paste in at once — whole specs, long threads) and whether the model can <b>search the web</b> for current info.' },
+            { type: 'choice', q: 'You need a one-line reminder text. Sensible choice?', options: ['A fast, cheap model — the job doesn’t need a heavy reasoner', 'Always the biggest, slowest model', 'Don’t use AI for it'], answer: 0, explain: 'Don’t bring the excavator to plant a seedling. Match the tool to the task.' },
+            { type: 'choice', q: 'When does a heavier “reasoning” model actually earn its keep?', options: ['A complex, multi-step problem where getting it right matters', 'Saying “gidday”', 'Fixing a typo'], answer: 0, explain: 'Hard, high-stakes, multi-step work is where the extra thinking pays off.' },
+            { type: 'info', title: 'You can also have it build you tools', body: 'You can get a model to build small working tools with no coding from you — a job-cost calculator, a checklist app, a simple site (Claude calls these <b>Artifacts</b>). You describe it, it builds and runs it, you refine by chatting. Worth knowing the ceiling of what you can make yourself before paying someone.' },
+            { type: 'info', title: 'That’s the pro tier', body: 'Reusable assistants, tools & connectors, automations, agents, and choosing the right model. You now understand not just <i>what</i> these tools do but <i>how</i> they work. Keep an eye on the Ideas tab — request the deep-dives you want next.' }
           ]
         }
       ]
     },
 
-    /* ===================== UNIT: MEET CLAUDE ===================== */
+    /* ===================== UNIT 4 — MEET CLAUDE ===================== */
     {
       id: 'ucl',
       title: 'Meet Claude',
-      subtitle: 'Anthropic’s AI, feature by feature',
+      subtitle: 'Anthropic’s AI — what each feature really does',
       color: '#D97757',
       icon: '🧡',
       locked: false,
       lessons: [
-        /* ---- Claude L1 ---- */
         {
           id: 'ucl1',
           title: 'Meet Claude',
           icon: '🧡',
           xp: 20,
           cards: [
-            {
-              type: 'info',
-              title: 'Say hello to Claude',
-              body: 'Claude is an AI made by a mob called <b>Anthropic</b>. Same deal as ChatGPT — you chat in plain English — but Claude’s a gun at writing, thinking things through, and chewing through long documents (contracts, specs, big council PDFs). Grab it at <b>claude.ai</b> or the app.'
-            },
-            { type: 'choice', q: 'Who makes Claude?', options: ['Google', 'Anthropic', 'Bunnings'], answer: 1, explain: 'Anthropic. (ChatGPT’s the OpenAI one — different mob, same kind of tool.)' },
-            { type: 'truefalse', q: 'Claude is a solid pick when you’ve got a long document to make sense of, like a 40-page spec.', isTrue: true, explain: 'Yep — long, wordy stuff is right in Claude’s wheelhouse.' },
-            { type: 'choice', q: 'Where do you get Claude?', options: ['claude.ai or the Claude app', 'At the trade counter', 'It comes with your ute'], answer: 0, explain: 'claude.ai or the app on your phone. Free to start.' },
-            { type: 'truefalse', q: 'Claude and ChatGPT are the exact same app.', isTrue: false, explain: 'Trap! Different companies, both great. Plenty of tradies keep both in the toolbox.' },
-            {
-              type: 'info',
-              title: 'Claude’s got a big toolbox',
-              body: 'The headline features: <b>Projects</b> (remembers your stuff), <b>Artifacts</b> (builds things), <b>Cowork</b> (does jobs), <b>Connectors</b> (plug in your apps), <b>Skills</b> (your way) — plus it can read photos, chew through files, search the web and talk. We’ll hit the lot, no jargon.'
-            }
+            { type: 'info', title: 'Same kind of tool, different strengths', body: 'Claude (by <b>Anthropic</b>) is an LLM like ChatGPT — it predicts text — but it’s known for a few things: handling <b>very long documents</b> in one go, careful step-by-step <b>reasoning</b>, and a writing style many find more natural. It’s built with a heavy focus on being safe and honest. Get it at <b>claude.ai</b> or the app.' },
+            { type: 'choice', q: 'Claude is a particularly strong pick when you need to…', options: ['Work through a long document (a full spec or contract) carefully', 'Crimp a fitting', 'Make a phone call for you'], answer: 0, explain: 'Long-context comprehension and careful reasoning are where it shines.' },
+            { type: 'truefalse', q: 'Despite different strengths, Claude works on the same predict-the-next-text foundation as other LLMs — including the hallucination risk.', isTrue: true, explain: 'Same fundamentals, so the same habits apply: ground it and verify what matters.' },
+            { type: 'info', title: 'The features worth knowing', body: 'This unit covers what each one actually does and when to reach for it: <b>Projects</b>, <b>Artifacts</b>, <b>Cowork</b>, <b>Connectors</b>, <b>Skills</b>, plus reading images & files, web search and deep thinking.' }
           ]
         },
-        /* ---- Claude L2: Projects ---- */
         {
           id: 'ucl2',
           title: 'Projects',
           icon: '📁',
           xp: 25,
           cards: [
-            {
-              type: 'info',
-              title: 'Projects = Claude remembers your gear',
-              body: 'A <b>Project</b> is like a job folder. You load in your business details once — your rates, your tone, your patch, even old quotes — and every chat inside that Project already knows it. No more re-explaining yourself every single time.'
-            },
-            { type: 'choice', q: 'What’s a Claude Project, best described?', options: ['A folder where Claude remembers your stuff', 'A brand of fitting', 'A type of invoice'], answer: 0, explain: 'A saved workspace that remembers your info so you don’t repeat yourself.' },
-            { type: 'truefalse', q: 'With a Project set up for your business, Claude already knows your pricing and style every time you start a new chat in it.', isTrue: true, explain: 'That’s the whole point — load it once, it’s there every time.' },
-            { type: 'choice', q: 'You quote weekly and keep typing the same business info. The fix?', options: ['Make a Project with your details', 'Type faster', 'Give up'], answer: 0, explain: 'A Project holds it for you. Set up once, reuse forever.' },
-            {
-              type: 'match',
-              q: 'What goes in a “My Business” Project:',
-              pairs: [
-                ['Your call-out rate', 'So quotes are priced right'],
-                ['Your tone', 'So emails sound like you'],
-                ['Your service area', 'So it knows where you work']
-              ],
-              explain: 'Load it once, Claude leans on it every chat in that Project.'
-            },
-            { type: 'truefalse', q: 'You can have separate Projects for separate jobs — say one for quoting, one for social media.', isTrue: true, explain: 'Yep — keeps each one focused with just the right info.' }
+            { type: 'info', title: 'A workspace with standing context', body: 'A <b>Project</b> bundles two things every chat inside it inherits: <b>custom instructions</b> (standing rules — your trade, tone, how you want things done) and <b>knowledge</b> (files you upload — rate cards, templates, past jobs). Every new chat in that Project starts already loaded with all of it. It’s the practical fix for re-explaining your business every single time.' },
+            { type: 'choice', q: 'What does a Project actually give every chat inside it?', options: ['Your standing instructions + uploaded knowledge, automatically', 'A faster internet connection', 'A different AI model'], answer: 0, explain: 'Instructions + knowledge, inherited by default. Set up once, reused every chat.' },
+            { type: 'truefalse', q: 'A Project is a good place to keep separate setups — e.g. one for quoting, one for marketing.', isTrue: true, explain: 'Separate Projects keep each job focused on just the right instructions and files.' },
+            { type: 'choice', q: 'You upload your rate card and terms to a “KPA Quotes” Project. The effect?', options: ['Every quote chat there can use your real rates and terms without re-pasting', 'It posts your rates publicly', 'It charges customers automatically'], answer: 0, explain: 'The knowledge sits there ready. You just ask; it already has the context.' }
           ]
         },
-        /* ---- Claude L3: Artifacts ---- */
         {
           id: 'ucl3',
           title: 'Artifacts',
           icon: '🛠️',
           xp: 25,
           cards: [
-            {
-              type: 'info',
-              title: 'Artifacts = Claude builds the actual thing',
-              body: 'Ask Claude to make something — a quote, a checklist, a price calculator, even a little website — and it opens a panel beside the chat and builds it there, <b>live</b>. You can tweak it, copy it, or download it. You get a finished thing, not just words.'
-            },
-            { type: 'choice', q: 'What’s an Artifact?', options: ['A live thing Claude builds in a side panel', 'An old tool in a museum', 'A type of fastener'], answer: 0, explain: 'It’s the actual doc/tool/app Claude builds, shown live beside your chat.' },
-            { type: 'truefalse', q: 'If Claude builds you a job checklist as an Artifact, you can edit it and download it.', isTrue: true, explain: 'Exactly — tweak it, copy it, download it. It’s yours.' },
-            { type: 'choice', q: 'You want a “what’ll my bathroom reno cost” calculator for your website. That comes back as…', options: ['An Artifact', 'A text message', 'A fax'], answer: 0, explain: 'Calculators, web pages, charts — all Artifacts.' },
-            {
-              type: 'order',
-              q: 'How using an Artifact usually goes:',
-              steps: [
-                'Ask Claude to build the thing',
-                'It appears live in a side panel',
-                'You ask for tweaks',
-                'You copy or download the finished version'
-              ],
-              explain: 'Describe it, watch it build, refine, take it away.'
-            },
-            { type: 'truefalse', q: 'Artifacts are only ever plain text.', isTrue: false, explain: 'Trap! They can be interactive — calculators, web pages, charts, the lot.' }
+            { type: 'info', title: 'It builds the actual thing, live', body: 'Normally it replies in chat. With <b>Artifacts</b>, when you ask it to make something — a document, a checklist, a price calculator, a small web app — it opens a panel and <b>builds it there, working and live</b>. It can write and run code to do it. You refine by chatting (“add a GST line”, “make the button bigger”) and download or share the result. You get a finished tool, not just words about one.' },
+            { type: 'choice', q: 'What’s genuinely different about an Artifact vs a normal reply?', options: ['It produces a working, editable thing in a side panel — often by writing and running code', 'It’s just bold text', 'It reads the answer aloud'], answer: 0, explain: 'It’s the real artefact — a runnable calculator or app — that you iterate on, not a description.' },
+            { type: 'truefalse', q: 'You can keep refining an Artifact by chatting, then download or share it.', isTrue: true, explain: 'It’s iterative: build, tweak, tweak, ship.' },
+            { type: 'choice', q: 'Best fit for an Artifact?', options: ['“Build me a bathroom-reno cost calculator I can put on my website”', '“What’s 10% of 500?”', '“Define plumbing”'], answer: 0, explain: 'Calculators, pages, charts, mini-apps — things, not one-line answers.' }
           ]
         },
-        /* ---- Claude L4: Cowork ---- */
         {
           id: 'ucl4',
           title: 'Cowork',
           icon: '🤝',
           xp: 30,
           cards: [
-            {
-              type: 'info',
-              title: 'Cowork = Claude rolls its sleeves up',
-              body: 'Chat is for <b>asking</b>. Cowork is for <b>doing</b>. In Cowork, Claude works through a whole job — goes through your files, builds a spreadsheet, or uses your connected apps (Gmail, Xero, Google Drive) to get it done end to end. Less “answer my question”, more “sort this out for me”.'
-            },
-            { type: 'choice', q: 'Normal chat vs Cowork — the difference?', options: ['Cowork actually does multi-step jobs, not just answers', 'Cowork is just a louder chat', 'No difference'], answer: 0, explain: 'Cowork carries out the job. Chat just talks about it.' },
-            { type: 'truefalse', q: 'In Cowork, Claude can use apps you’ve connected — like pulling figures from Xero or drafting emails in Gmail.', isTrue: true, explain: 'True. Those hook-ups are called Connectors — they let Claude reach your real tools.' },
-            { type: 'choice', q: 'Which job suits Cowork best?', options: ['“Go through these 20 invoices and build me a summary spreadsheet”', '“What’s 10% of 500?”', '“Define plumbing”'], answer: 0, explain: 'Big, multi-step jobs are Cowork territory. Quick questions = just chat.' },
-            {
-              type: 'match',
-              q: 'Match the connected app to what Claude can do:',
-              pairs: [
-                ['Xero', 'Pull your numbers'],
-                ['Gmail', 'Draft & sort emails'],
-                ['Drive', 'Read your files']
-              ],
-              explain: 'These are Connectors — Cowork uses them to do real work for you.'
-            },
-            { type: 'truefalse', q: 'Cowork is best for tiny one-line questions.', isTrue: false, explain: 'Trap! Quick questions — plain chat’s faster. Save Cowork for the bigger jobs.' }
+            { type: 'info', title: 'Claude doing multi-step work on real files', body: 'Chat answers; <b>Cowork</b> does. You point Claude at a folder or connected apps and it works through a whole job — reading and editing files, building a spreadsheet, going step by step — and can even split work across helper <b>sub-agents</b> for bigger tasks. It’s Claude operating as an agent (loop + tools + goal) rather than a one-shot reply. Use it for real jobs; use plain chat for quick questions.' },
+            { type: 'choice', q: 'Cowork is the right tool when…', options: ['You’ve got a multi-step job over real files (“go through these 30 invoices and build a summary”)', 'You want a single quick definition', 'You want it to talk louder'], answer: 0, explain: 'Multi-step, file-based, goal-driven work — that’s Cowork’s lane.' },
+            { type: 'truefalse', q: 'In Cowork, Claude can read and edit actual files and use connected apps to finish a task end-to-end.', isTrue: true, explain: 'That’s the leap from advice to done work.' },
+            { type: 'choice', q: 'Because Cowork can change files and take actions, the sensible habit is…', options: ['Scope what it can touch and review the result, especially first few times', 'Let it loose on everything unsupervised', 'Never use it'], answer: 0, explain: 'Capable tool, real consequences. Bound it, check it, then trust it more over time.' }
           ]
         },
-        /* ---- Claude L5: Connectors ---- */
         {
-          id: 'ucl5conn', title: 'Connectors', icon: '🔌', xp: 25,
+          id: 'ucl5conn', title: 'Connectors (MCP)', icon: '🔌', xp: 25,
           cards: [
-            { type: 'info', title: 'Connectors = plug in your apps', body: 'A <b>Connector</b> hooks Claude up to an app you already use — Gmail, Xero, Google Drive, Slack — so it can work with your real stuff. Connect once, and Claude can grab a file from Drive or draft an email in Gmail without you copy-pasting.' },
-            { type: 'choice', q: 'What does a Connector do?', options: ['Links Claude to an app you use (Gmail, Xero…)', 'Charges your drill', 'Joins two pipes'], answer: 0, explain: 'It plugs Claude into your real tools.' },
-            { type: 'match', q: 'Match the app to what Claude can do with it:', pairs: [['Gmail', 'Draft & send emails'], ['Xero', 'Work with your invoices'], ['Drive', 'Open your files']], explain: 'Connect it once, then Claude works with the real thing.' },
-            { type: 'truefalse', q: 'Once connected, Claude can pull info from your apps so you don’t copy-paste it in.', isTrue: true, explain: 'Saves the copy-paste shuffle every time.' },
-            { type: 'truefalse', q: 'You must connect every app or Claude won’t work at all.', isTrue: false, explain: 'Trap! Connectors are optional extras. Plain Claude works fine; they just plug in your real tools.' }
+            { type: 'info', title: 'A standard way to plug in your tools', body: 'A <b>Connector</b> links Claude to an app or data source — Gmail, Xero, Google Drive, Slack — so it can use the real thing. Anthropic built an open standard for this called <b>MCP</b> (Model Context Protocol); think of it as a universal adapter so any tool can be plugged into any AI the same way. Connect once, and Claude can read a file from Drive or draft from a real email — no copy-paste.' },
+            { type: 'choice', q: 'What problem does MCP / Connectors solve?', options: ['A standard way to plug real tools and data into the AI so it works with live info', 'Charging your tools’ batteries', 'Making the AI louder'], answer: 0, explain: 'One standard “adapter” means tools and AIs connect the same way instead of every pair needing custom wiring.' },
+            { type: 'match', q: 'Match the connector to what Claude can then do:', pairs: [['Xero', 'Work with real invoices & figures'], ['Gmail', 'Draft from actual emails'], ['Drive', 'Read your real files']], explain: 'Connected = live data in the loop, not a guess.' },
+            { type: 'truefalse', q: 'Connectors are optional — plain Claude still works without any connected.', isTrue: true, explain: 'They’re power-ups. Add the ones that save you time; skip the rest.' }
           ]
         },
-        /* ---- Claude L6: Skills ---- */
         {
           id: 'ucl6skills', title: 'Skills', icon: '🎓', xp: 25,
           cards: [
-            { type: 'info', title: 'Skills = teach it your way', body: 'A <b>Skill</b> teaches Claude the way YOU do a job — like “build my quotes the way I like them” or “write my job updates in my style”. Set it up once and Claude nails it your way every time, no re-explaining.' },
-            { type: 'choice', q: 'A Skill is…', options: ['A saved how-to that teaches Claude your way of doing a job', 'A TAFE course', 'A new app to download'], answer: 0, explain: 'It bakes in your method so you don’t repeat it.' },
-            { type: 'truefalse', q: 'With a quoting Skill, Claude builds quotes your way without you explaining the steps each time.', isTrue: true, explain: 'Your process, on tap.' },
-            { type: 'choice', q: 'You do job reports the same way every week. Best fix?', options: ['Make a Skill for it', 'Retype the steps each time', 'Stop doing reports'], answer: 0, explain: 'Repeatable job done your way = perfect for a Skill.' }
+            { type: 'info', title: 'Packaged know-how for a repeatable job', body: 'A <b>Skill</b> is a saved procedure that teaches Claude how to do a specific job your way — “build a KPA quote from a measure sheet”, end to end. Unlike a one-off prompt you retype, a Skill is reusable and can bundle steps, rules and even files. Once it exists, you trigger it and Claude follows your method every time. It’s how you turn “the way I do X” into something the AI just does.' },
+            { type: 'choice', q: 'How is a Skill different from just typing a good prompt each time?', options: ['It’s a saved, reusable procedure — bundled steps and rules you trigger, not retype', 'It’s a TAFE qualification', 'It’s a faster model'], answer: 0, explain: 'A prompt is a sentence; a Skill is a saved workflow you reuse.' },
+            { type: 'truefalse', q: 'Skills shine for jobs you repeat the same way (quotes, job reports, standard emails).', isTrue: true, explain: 'Repeatable + your-specific-method = perfect Skill territory.' },
+            { type: 'choice', q: 'Project vs Skill — the clean distinction?', options: ['A Project holds context/knowledge; a Skill packages a repeatable procedure to run', 'They’re identical', 'A Skill stores customer data'], answer: 0, explain: 'Project = a workspace that knows your stuff. Skill = a saved way of doing a job.' }
           ]
         },
-        /* ---- Claude L7: Eyes, ears & files ---- */
         {
-          id: 'ucl7eyes', title: 'Eyes, ears & files', icon: '👀', xp: 25,
+          id: 'ucl7eyes', title: 'Images, files & voice', icon: '👀', xp: 25,
           cards: [
-            { type: 'info', title: 'Eyes, ears and a good memory', body: 'Claude does more than read your text. Show it a <b>photo</b> (a part, a fault, a handwritten note) and it’ll read it. <b>Upload a file</b> — a PDF spec, a spreadsheet, a council doc — and it’ll go through it. On the app you can even <b>talk</b> to it.' },
-            { type: 'truefalse', q: 'You can upload a 50-page PDF spec and have Claude pull out the key points.', isTrue: true, explain: 'Long docs are no drama for Claude.' },
-            { type: 'choice', q: 'Found a mystery part on site. Quickest way to ask Claude?', options: ['Snap a photo and ask what it is', 'Describe it for 10 minutes', 'Reckon it can’t be done'], answer: 0, explain: 'Show it — a photo beats a thousand words.' },
-            { type: 'match', q: 'Match the input to what it’s for:', pairs: [['Photo', 'Show it a part or note'], ['PDF / sheet', 'Have it read your docs'], ['Voice', 'Talk to it on the app']], explain: 'Type it, show it, or say it — Claude takes the lot.' }
+            { type: 'info', title: 'It’s multimodal — not just text', body: 'Claude can take in more than typing. Show it a <b>photo</b> (a part, a fault, a handwritten note) and it reads and reasons about it. Upload <b>files</b> — PDFs, spreadsheets, long specs — and it works through them. On the app you can <b>talk</b> to it. Useful limit to remember: vision and document reading aren’t perfect — confirm anything critical it pulls off a blurry photo or a dense table.' },
+            { type: 'truefalse', q: 'You can upload a 50-page PDF and have Claude pull out and explain the key points.', isTrue: true, explain: 'Long documents are a particular strength — its big context window helps here.' },
+            { type: 'choice', q: 'It reads a measurement off a blurry site photo. Smart move?', options: ['Use it, but confirm the critical number yourself', 'Trust it completely', 'Assume it can’t read photos at all'], answer: 0, explain: 'Vision is genuinely useful and genuinely imperfect. Verify what matters.' },
+            { type: 'match', q: 'Match the input to a good use:', pairs: [['Photo', 'Identify a part or read a note'], ['PDF / sheet', 'Summarise or analyse a document'], ['Voice', 'Hands-free Q&A on the app']], explain: 'Type it, show it, or say it — Claude takes all three.' }
           ]
         },
-        /* ---- Claude L8: More power ---- */
         {
-          id: 'ucl8power', title: 'More power', icon: '⚡', xp: 25,
+          id: 'ucl8power', title: 'Web search & deep thinking', icon: '⚡', xp: 25,
           cards: [
-            { type: 'info', title: 'A few more party tricks', body: 'Claude can <b>search the web</b> for up-to-date info, handle <b>huge documents</b> in one go, and do <b>deep thinking</b> on tricky problems (a research / think-harder mode). There’s even <b>Claude Code</b> for the techy folks who want it building software.' },
-            { type: 'truefalse', q: 'Claude can look things up on the web for current info, like today’s rules or prices.', isTrue: true, explain: 'Web search means it’s not stuck with old info.' },
-            { type: 'choice', q: 'Got a gnarly problem with lots of moving parts. What helps?', options: ['Ask Claude to think it through deeply (research mode)', 'Nothing, you’re stuck', 'Turn it off and on'], answer: 0, explain: 'Deep-thinking mode is built for the hard, tangled ones.' },
-            { type: 'truefalse', q: 'Claude can only handle a paragraph or two at a time.', isTrue: false, explain: 'Trap! It handles big, long documents in one hit — whole specs, long threads, the lot.' }
+            { type: 'info', title: 'Current info and harder reasoning', body: 'Two more levers. <b>Web search</b> lets Claude look up current information — today’s prices, a recent rule change — closing the training cut-off gap, with links so you can check. <b>Extended thinking</b> (a deeper reasoning mode) makes it work a tricky problem through more carefully before answering — slower, but better on genuinely hard, multi-part questions. And for the technical, <b>Claude Code</b> runs it as a coding agent in the terminal.' },
+            { type: 'truefalse', q: 'With web search on, Claude can ground an answer in current sources and show you the links.', isTrue: true, explain: 'It pulls live info and cites it — so you’re not stuck with stale training data, and you can verify.' },
+            { type: 'choice', q: 'When is “extended thinking” / deeper reasoning worth the extra wait?', options: ['A complex, multi-part problem where accuracy matters', 'A one-line greeting', 'Reading the time'], answer: 0, explain: 'Save the heavy thinking for the hard stuff; it’s overkill for trivial asks.' },
+            { type: 'choice', q: 'Web search mainly fixes which limitation of an LLM?', options: ['Its knowledge cut-off — it doesn’t know recent events on its own', 'Its spelling', 'Its colour'], answer: 0, explain: 'Search bridges the gap between “trained months ago” and “what’s true today”.' }
           ]
         },
-        /* ---- Claude L9: recap ---- */
         {
           id: 'ucl5',
-          title: 'Which bit, when?',
+          title: 'Which feature, when?',
           icon: '🧭',
           xp: 30,
           cards: [
-            { type: 'info', title: 'Right tool, right job', body: 'Quick recap so you know what to reach for with Claude.' },
-            {
-              type: 'match',
-              q: 'Match the job to the Claude feature:',
-              pairs: [
-                ['Quick question', 'Just chat'],
-                ['Stop re-explaining your biz', 'A Project'],
-                ['Get a finished doc/tool', 'An Artifact'],
-                ['Do a big multi-step job', 'Cowork']
-              ],
-              explain: 'Chat asks, Projects remember, Artifacts build, Cowork does.'
-            },
-            { type: 'choice', q: 'You want Claude to remember your rates for every quote chat. Use…', options: ['A Project', 'An Artifact', 'Voice'], answer: 0, explain: 'A Project holds your info so every chat starts knowing it.' },
-            { type: 'choice', q: 'You want Claude to build a downloadable site-safety checklist. Use…', options: ['An Artifact', 'A Project', 'Cowork'], answer: 0, explain: 'A finished, downloadable thing = an Artifact.' },
-            { type: 'truefalse', q: '“Skills” are like teaching Claude how YOU do a job, so it does it your way every time.', isTrue: true, explain: 'Spot on — a Skill is a saved how-to (e.g. “build my quotes my way”). Handy once you’re rolling.' },
-            { type: 'info', title: 'You know Claude now! 🧡', body: 'Projects remember, Artifacts build, Cowork does the work, Connectors plug in your apps, Skills teach it your way. Next up — <b>ChatGPT</b>.' }
+            { type: 'info', title: 'A decision framework', body: 'You don’t pick features at random — you match them to the shape of the job. Here’s the map, with the reasoning.' },
+            { type: 'match', q: 'Match the job to the right Claude feature:', pairs: [['Quick one-off question', 'Plain chat'], ['Stop re-explaining your business', 'A Project'], ['Produce a finished tool/doc', 'An Artifact'], ['Do a multi-step job on files', 'Cowork']], explain: 'Chat for asking, Project for context, Artifact for building, Cowork for doing.' },
+            { type: 'choice', q: 'You want it to work with your live Xero figures. The piece you need is…', options: ['A Connector (so it reaches real data)', 'A louder voice', 'A new password'], answer: 0, explain: 'Live data = a Connector. Without it, it’s guessing from training.' },
+            { type: 'choice', q: 'You do the same fiddly job your way every week. Best fit?', options: ['A Skill (packaged, repeatable procedure)', 'A brand-new chat each time', 'Web search'], answer: 0, explain: 'Repeatable + your method = a Skill. Build it once, run it forever.' },
+            { type: 'info', title: 'You know Claude properly now', body: 'Projects hold context, Artifacts build things, Cowork does jobs, Connectors plug in real data, Skills package your methods, and it reads images, files and the live web. Next: the same depth on ChatGPT.' }
           ]
         }
       ]
     },
 
-    /* ===================== UNIT: MEET CHATGPT ===================== */
+    /* ===================== UNIT 5 — MEET CHATGPT ===================== */
     {
       id: 'ugp',
       title: 'Meet ChatGPT',
-      subtitle: 'OpenAI’s AI, feature by feature',
+      subtitle: 'OpenAI’s AI — what each feature really does',
       color: '#10A37F',
       icon: '💚',
       locked: false,
       lessons: [
-        /* ---- ChatGPT L1 ---- */
         {
           id: 'ugp1',
           title: 'Meet ChatGPT',
           icon: '💚',
           xp: 20,
           cards: [
-            {
-              type: 'info',
-              title: 'Say hello to ChatGPT',
-              body: 'ChatGPT is the AI from a mob called <b>OpenAI</b> — the one that kicked off the whole craze. A cracking all-rounder: writing, answers, images, and a brilliant voice mode. There’s a free version and a paid one. Get it at <b>chatgpt.com</b> or the app.'
-            },
-            { type: 'choice', q: 'Who makes ChatGPT?', options: ['OpenAI', 'Anthropic', 'Telstra'], answer: 0, explain: 'OpenAI. (Claude’s the Anthropic one.)' },
-            { type: 'truefalse', q: 'There’s a free version of ChatGPT you can start on.', isTrue: true, explain: 'Yep. Paid unlocks more, but free’s plenty to learn on.' },
-            { type: 'choice', q: 'ChatGPT is best described as…', options: ['A great all-rounder you chat, talk and share photos with', 'A power tool', 'A spreadsheet'], answer: 0, explain: 'Jack of all trades — type, talk, or show it a photo.' },
-            {
-              type: 'info',
-              title: 'What’s under the bonnet',
-              body: 'ChatGPT can <b>talk out loud</b>, <b>see photos</b>, <b>make images</b>, build docs beside you, crunch spreadsheets, <b>search the web</b>, <b>remember</b> your details, and even go off and <b>do whole tasks</b>. The next lessons walk through the big ones.'
-            }
+            { type: 'info', title: 'The all-rounder that kicked it off', body: 'ChatGPT (by <b>OpenAI</b>) is the tool that put this tech in front of everyone. It’s a capable all-rounder — strong at writing, explaining, coding, and it’s fully <b>multimodal</b> (text, voice, images). It runs on OpenAI’s <b>GPT</b> models, with a free tier and paid tiers that unlock the better models and higher limits. Get it at <b>chatgpt.com</b> or the app.' },
+            { type: 'choice', q: 'What does the free vs paid tier mainly change?', options: ['Access to the more capable models and higher usage limits', 'Whether it can talk at all', 'The colour of the app'], answer: 0, explain: 'Free is plenty to learn on; paid unlocks the stronger models and more usage.' },
+            { type: 'truefalse', q: 'ChatGPT runs on the same predict-the-next-text foundation as other LLMs, so it can hallucinate too.', isTrue: true, explain: 'Different brand, same fundamentals — ground it and verify the important stuff.' },
+            { type: 'info', title: 'What we’ll cover', body: 'The features that matter and when to use each: voice, vision & image generation; Custom GPTs & Projects; Canvas & data analysis; web search, memory & Tasks; and agent mode.' }
           ]
         },
-        /* ---- ChatGPT L2: voice + vision + images ---- */
         {
           id: 'ugp2',
-          title: 'Talk & snap',
+          title: 'Voice, vision & images',
           icon: '🎙️',
           xp: 25,
           cards: [
-            {
-              type: 'info',
-              title: 'Hands-free and eyes-on',
-              body: 'Two of ChatGPT’s best tricks on site: tap the <b>voice</b> button and just talk to it (gold when your hands are full or you’re driving), and tap the <b>camera</b> to show it a photo and ask about it. It can also <b>make images</b> for you — handy for marketing.'
-            },
-            { type: 'choice', q: 'Hands full on site but need to ask something. Best move?', options: ['Use voice mode and just talk', 'Stop and type with greasy hands', 'Wait till tomorrow'], answer: 0, explain: 'Voice mode is made for this — talk to it like a mate.' },
-            { type: 'truefalse', q: 'You can snap a photo of a part or a fault and ask ChatGPT what it reckons.', isTrue: true, explain: 'That’s “vision” — show it, don’t just describe it. (Still check anything important yourself.)' },
-            { type: 'choice', q: 'You want a logo-style pic for a Facebook post. ChatGPT can…', options: ['Generate an image for you', 'Only do words', 'Print it'], answer: 0, explain: 'It makes images from a description — good for quick marketing bits.' },
-            {
-              type: 'match',
-              q: 'Match the trick to the job:',
-              pairs: [
-                ['Voice', 'Ask hands-free on site'],
-                ['Camera', 'Show it a part or fault'],
-                ['Image maker', 'Knock up a marketing pic']
-              ],
-              explain: 'Type, talk, or show — whatever suits the moment.'
-            },
-            { type: 'truefalse', q: 'ChatGPT can only read typed words — no talking, no photos.', isTrue: false, explain: 'Trap! It sees, hears and speaks now. Talk to it, show it stuff.' }
+            { type: 'info', title: 'Three different multimodal skills', body: 'Don’t lump these together — they’re distinct. <b>Voice</b>: a real-time spoken conversation, great hands-free on site or driving. <b>Vision</b>: it <i>reads and reasons about</i> a photo you show it (a part, a fault, a label). <b>Image generation</b>: it <i>creates</i> a new picture from your description — for marketing, mock-ups, social posts. One understands images; the other makes them.' },
+            { type: 'choice', q: 'What’s the difference between vision and image generation?', options: ['Vision reads an image you give it; generation creates a new image from a description', 'They’re the same thing', 'Vision is paid, generation is free'], answer: 0, explain: 'Understanding vs creating — two different jobs, two different tools.' },
+            { type: 'truefalse', q: 'Voice mode is well suited to asking questions when your hands are full on the tools.', isTrue: true, explain: 'Hands-free, real-time — built for the ute or the site.' },
+            { type: 'choice', q: 'You snap a photo of an unfamiliar valve and ask what it is. Sensible habit?', options: ['Use its read as a strong lead, but confirm before you rely on it for a job', 'Take it as gospel', 'Assume it can’t see photos'], answer: 0, explain: 'Vision is useful and imperfect — verify anything that drives a real decision.' }
           ]
         },
-        /* ---- ChatGPT L3: GPTs + Projects ---- */
         {
           id: 'ugp3',
-          title: 'GPTs & Projects',
+          title: 'Custom GPTs & Projects',
           icon: '🧰',
           xp: 25,
           cards: [
-            {
-              type: 'info',
-              title: 'Mini-helpers and job folders',
-              body: 'A <b>Custom GPT</b> is a mini-version of ChatGPT set up for one job — like a quoting helper or a marketing helper — and there’s a whole store of them. <b>Projects</b> are folders that keep related chats and files together, so a big job stays tidy.'
-            },
-            { type: 'choice', q: 'What’s a Custom GPT?', options: ['A mini ChatGPT set up for one specific job', 'A new phone', 'A type of bolt'], answer: 0, explain: 'A purpose-built helper — point it at one job and it’s ready.' },
-            { type: 'truefalse', q: 'ChatGPT Projects let you keep all the chats and files for one big job in the one spot.', isTrue: true, explain: 'Keeps a reno or a tender from getting scattered everywhere.' },
-            { type: 'choice', q: 'There’s a whole ___ of ready-made Custom GPTs you can grab.', options: ['store', 'shed', 'ute'], answer: 0, explain: 'The GPT Store — millions of them, made for all sorts of jobs.' },
-            {
-              type: 'match',
-              q: 'Match it up:',
-              pairs: [
-                ['Custom GPT', 'A helper built for one job'],
-                ['Project', 'A folder for one job’s chats + files']
-              ],
-              explain: 'GPTs do a job; Projects keep a job organised.'
-            }
+            { type: 'info', title: 'Reusable assistants vs tidy workspaces', body: 'A <b>Custom GPT</b> is a packaged assistant: standing instructions, attached knowledge, and optionally <b>actions</b> (connections to other tools) — built for one job, like a quoting helper. There’s a whole <b>GPT Store</b> of ready-made ones. A <b>Project</b> is different: a workspace that keeps the chats and files for one big job together. GPT = a reusable helper; Project = an organised folder.' },
+            { type: 'choice', q: 'A Custom GPT is best described as…', options: ['A reusable assistant with set instructions, knowledge and (optionally) tool actions', 'A folder of chats', 'A new phone'], answer: 0, explain: 'It’s the packaged helper — same idea as Claude’s Projects/Skills combined.' },
+            { type: 'truefalse', q: 'A ChatGPT Project keeps the chats and files for one job in one place.', isTrue: true, explain: 'Stops a big reno or tender getting scattered across random chats.' },
+            { type: 'match', q: 'Match it up:', pairs: [['Custom GPT', 'Reusable assistant for one job'], ['GPT Store', 'Library of ready-made GPTs'], ['Project', 'Workspace for one job’s chats + files']], explain: 'Helper, library of helpers, and a place to keep a job tidy.' }
           ]
         },
-        /* ---- ChatGPT L4: Canvas + files ---- */
         {
           id: 'ugp4',
-          title: 'Canvas & files',
+          title: 'Canvas & data analysis',
           icon: '📊',
           xp: 25,
           cards: [
-            {
-              type: 'info',
-              title: 'Edit side-by-side & crunch files',
-              body: '<b>Canvas</b> opens a document beside your chat so you can edit the wording together — great for quotes, letters, website copy. And you can <b>upload a file</b> — a spreadsheet, a PDF, a council doc — and ChatGPT will summarise it, pull the key bits, or crunch the numbers.'
-            },
-            { type: 'choice', q: 'What’s Canvas good for?', options: ['Editing a document side-by-side with ChatGPT', 'Painting the fence', 'Storing tools'], answer: 0, explain: 'A shared editor for quotes, letters, web copy — tidy it up together.' },
-            { type: 'truefalse', q: 'You can upload a messy spreadsheet and ask ChatGPT to total it up or find the dearest items.', isTrue: true, explain: 'That’s the file/data smarts. Upload, then ask away.' },
-            { type: 'choice', q: 'Got a 30-page PDF spec and no time. ChatGPT can…', options: ['Summarise it and pull the key points', 'Only if you retype it all', 'Nope, can’t'], answer: 0, explain: 'Upload it and ask for the guts of it. (Double-check anything critical.)' },
-            {
-              type: 'order',
-              q: 'Using a file with ChatGPT:',
-              steps: [
-                'Upload the file',
-                'Tell it what you want — summary, totals, key points',
-                'Read what it gives back',
-                'Double-check anything important'
-              ],
-              explain: 'Upload, ask, read, verify. Same as a keen apprentice — check the work.'
-            }
+            { type: 'info', title: 'A shared editor, and a number-cruncher', body: 'Two power features. <b>Canvas</b> opens a document beside the chat you both edit directly — great for quotes, letters, web copy — instead of regenerating the whole thing each time. <b>Data analysis</b> is bigger than it sounds: upload a spreadsheet and ChatGPT actually <b>writes and runs code</b> (Python) on your data to total it, find outliers, and draw charts. It’s computing real results, not guessing at numbers.' },
+            { type: 'choice', q: 'When ChatGPT analyses your spreadsheet, what’s really happening?', options: ['It writes and runs code on your data to compute real results', 'It eyeballs the numbers and estimates', 'It can’t handle spreadsheets'], answer: 0, explain: 'Actual computation — so the totals and charts are calculated, not predicted. Still sanity-check the setup.' },
+            { type: 'truefalse', q: 'Canvas is better than plain chat when you want to edit a document together line by line.', isTrue: true, explain: 'Direct editing beats regenerating the whole reply for every small change.' },
+            { type: 'choice', q: 'Best fit for data analysis?', options: ['“Here’s my jobs spreadsheet — total revenue by month and chart it”', '“Write me a poem”', '“What’s your name?”'], answer: 0, explain: 'Real numbers, real computation, a real chart out the other side.' }
           ]
         },
-        /* ---- ChatGPT L5: more handy bits ---- */
         {
-          id: 'ugp5more', title: 'More handy bits', icon: '🧠', xp: 25,
+          id: 'ugp5more', title: 'Web search, memory & Tasks', icon: '🧠', xp: 25,
           cards: [
-            { type: 'info', title: 'More handy bits', body: 'Beyond chatting, ChatGPT can <b>search the web</b> for current info, <b>remember</b> things about you between chats (your trade, your style), <b>crunch data</b> from a spreadsheet (totals, charts), and even <b>run jobs on a schedule</b> — like a Monday-morning summary.' },
-            { type: 'truefalse', q: 'ChatGPT can remember your trade and style across chats so you don’t repeat it.', isTrue: true, explain: 'That’s “memory”. Handy — and you can turn it off or clear it anytime.' },
-            { type: 'choice', q: 'Upload your job spreadsheet and ask for a total and a chart. ChatGPT…', options: ['Crunches the numbers and makes the chart', 'Can’t do maths', 'Just prints it'], answer: 0, explain: 'That’s data analysis — great for the numbers side.' },
-            { type: 'truefalse', q: 'ChatGPT can look up current info on the web, not just old knowledge.', isTrue: true, explain: 'Web search keeps it up to date.' },
-            { type: 'choice', q: 'Want a summary of your week every Friday. ChatGPT can…', options: ['Run it on a schedule (Tasks)', 'Only if you ask each time', 'Not at all'], answer: 0, explain: 'Scheduled Tasks do the recurring stuff for you.' }
+            { type: 'info', title: 'Current info, a memory, and a scheduler', body: 'Three more. <b>Web search</b>: pulls current info and cites it, fixing the training cut-off. <b>Memory</b>: it can remember things about you across chats (your trade, your style) and apply them automatically — and you can view, edit or clear what it’s stored. <b>Tasks</b>: schedule it to run on its own — e.g. a summary every Friday morning — so recurring jobs happen without you asking.' },
+            { type: 'truefalse', q: 'ChatGPT’s memory persists across chats, and you can see and delete what it has stored.', isTrue: true, explain: 'It carries useful context forward — and you stay in control of it. Worth checking what’s in there occasionally.' },
+            { type: 'choice', q: 'How is “memory” different from a Project?', options: ['Memory follows you across all chats automatically; a Project’s context is scoped to that workspace', 'They’re identical', 'Memory is a spreadsheet'], answer: 0, explain: 'Memory = global, automatic. Project = a deliberate, contained setup.' },
+            { type: 'choice', q: 'You want a weekly summary emailed every Friday without asking. Use…', options: ['Tasks (scheduled runs)', 'Image generation', 'Voice mode'], answer: 0, explain: 'Tasks is the built-in scheduler for recurring jobs.' }
           ]
         },
-        /* ---- ChatGPT L6: agent mode ---- */
         {
           id: 'ugp6agent', title: 'Agent mode', icon: '🤖', xp: 25,
           cards: [
-            { type: 'info', title: 'When ChatGPT goes and does it', body: 'ChatGPT has an <b>agent</b> side — give it a multi-step job and it’ll go off, work through it using tools, and come back with it done. There’s also <b>deep research</b>, where it digs through loads of sources and writes you a proper rundown.' },
-            { type: 'choice', q: 'What’s “agent mode”?', options: ['ChatGPT carries out a multi-step task for you', 'A louder voice', 'A pricier phone plan'], answer: 0, explain: 'It does the job, not just describes it — like Claude’s Cowork.' },
-            { type: 'truefalse', q: 'Deep research has ChatGPT dig through lots of sources and write you a proper summary.', isTrue: true, explain: 'Great for “tell me everything about X” jobs.' },
-            { type: 'truefalse', q: 'Agent mode is best for a one-word question.', isTrue: false, explain: 'Trap! Quick Q’s = normal chat. Agent mode shines on bigger, do-it-for-me jobs.' }
+            { type: 'info', title: 'When it does the job, not just describes it', body: 'ChatGPT has an <b>agent</b> side: give it a multi-step goal and it works through it using tools — browsing, clicking, filling things in — then comes back with it done. <b>Deep research</b> is a focused version: it hunts across many sources and writes you a structured, cited rundown. Same agent idea as Claude’s Cowork — a model in a loop with tools. Same caution too: scope it, and check the result.' },
+            { type: 'choice', q: 'What is agent mode doing that normal chat isn’t?', options: ['Running a multi-step task with tools to actually complete it', 'Talking in a deeper voice', 'Answering one question then stopping'], answer: 0, explain: 'It carries out the job end-to-end rather than telling you how to.' },
+            { type: 'truefalse', q: 'Deep research is good for “tell me everything about X”, pulling many sources into one cited summary.', isTrue: true, explain: 'Multi-source synthesis with citations — a real time-saver for big questions.' },
+            { type: 'choice', q: 'Because an agent takes real actions, the smart rule is…', options: ['Use it for the legwork, but scope its access and review what it did', 'Let it run wild on everything', 'Avoid it entirely'], answer: 0, explain: 'Same as any capable agent: great for grunt work, you keep the oversight.' }
           ]
         },
-        /* ---- ChatGPT L7: recap ---- */
         {
           id: 'ugp5',
-          title: 'Which bit, when?',
+          title: 'Which feature, when?',
           icon: '🧭',
           xp: 30,
           cards: [
-            { type: 'info', title: 'Right tool, right job', body: 'Quick recap so you know what to reach for with ChatGPT.' },
-            {
-              type: 'match',
-              q: 'Match job to feature:',
-              pairs: [
-                ['Ask hands-free', 'Voice'],
-                ['Show it a part', 'Camera'],
-                ['Edit a quote together', 'Canvas'],
-                ['Make sense of a big PDF', 'Upload the file']
-              ],
-              explain: 'Each trick has its moment — now you know which is which.'
-            },
-            { type: 'choice', q: 'Hands full on the tools, need an answer. Use…', options: ['Voice', 'Canvas', 'A Project'], answer: 0, explain: 'Voice — talk to it, no typing.' },
-            { type: 'choice', q: 'Want to tidy the wording of a quote together. Use…', options: ['Canvas', 'Image maker', 'Voice'], answer: 0, explain: 'Canvas — edit the document side-by-side.' },
-            { type: 'truefalse', q: 'ChatGPT can also do bigger “go and do it” agent jobs, not just answer questions.', isTrue: true, explain: 'Yep — it’s growing agent smarts that carry out multi-step tasks, a bit like Claude’s Cowork.' },
-            { type: 'info', title: 'You’ve met both! 💚🧡', body: 'Claude and ChatGPT are both cracking — most tradies just use whichever they’ve got, or both. You now know the big features of each and when to reach for them. Get on the tools and have a play!' }
+            { type: 'info', title: 'Match the tool to the job', body: 'A quick framework so you reach for the right one without thinking.' },
+            { type: 'match', q: 'Match the job to the ChatGPT feature:', pairs: [['Ask hands-free on site', 'Voice'], ['Read a part off a photo', 'Vision'], ['Edit a quote together', 'Canvas'], ['Crunch a spreadsheet', 'Data analysis']], explain: 'Each has its moment — now you know which is which and why.' },
+            { type: 'choice', q: 'You want a reusable assistant loaded with your business rules. Use…', options: ['A Custom GPT', 'Image generation', 'Voice'], answer: 0, explain: 'Packaged instructions + knowledge = a Custom GPT.' },
+            { type: 'choice', q: 'You need current info with sources for a quote. Use…', options: ['Web search', 'Memory', 'Canvas'], answer: 0, explain: 'Live, cited info closes the knowledge-cut-off gap.' },
+            { type: 'info', title: 'You’ve met both properly', body: 'Claude and ChatGPT are both strong all-rounders built on the same foundation, each with their own kit. You now understand what each feature does and when to use it. Use whichever you’ve got — or both. Then get on the tools and put it to work.' }
           ]
         }
       ]
     },
 
-    /* ===================== UNIT 2 (teaser) ===================== */
+    /* ===================== UNIT 6 (teaser) ===================== */
     {
       id: 'u2',
       title: 'Run the Business',
@@ -815,7 +618,7 @@ const COURSE = {
       ]
     },
 
-    /* ===================== UNIT 3 (teaser) ===================== */
+    /* ===================== UNIT 7 (teaser) ===================== */
     {
       id: 'u3',
       title: 'On the Tools',
@@ -830,7 +633,7 @@ const COURSE = {
       ]
     },
 
-    /* ===================== UNIT 4 (teaser) ===================== */
+    /* ===================== UNIT 8 (teaser) ===================== */
     {
       id: 'u4',
       title: 'Winning Work',
