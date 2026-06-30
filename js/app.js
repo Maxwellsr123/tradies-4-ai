@@ -12,7 +12,6 @@ const App = (() => {
   const shuffle = (arr) => {
     const a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(((i + 1) * (Math.sin(i * 99 + a.length) * 0.5 + 0.5)) ); // stable-ish
       const k = Math.floor(Math.random() * (i + 1));
       [a[i], a[k]] = [a[k], a[i]];
     }
@@ -201,10 +200,13 @@ const App = (() => {
 
   // ---- CHOICE ----
   function cardChoice(c) {
+    // Shuffle the DISPLAY order so the correct answer isn't always in the same spot.
+    // data-i keeps the ORIGINAL index, so the answer-checking logic stays correct.
+    const opts = shuffle(c.options.map((o, i) => ({ o, i })));
     return `
       <div class="q-head"><span class="q-kicker">Pick one</span><h2>${h(c.q)}</h2></div>
       <div class="options" id="opts">
-        ${c.options.map((o, i) => `<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')}
+        ${opts.map(x => `<button class="opt" data-i="${x.i}">${esc(x.o)}</button>`).join('')}
       </div>`;
   }
 
