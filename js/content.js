@@ -693,6 +693,163 @@ const COURSE = {
       ]
     },
 
+    /* ===================== UNIT — STAYING SAFE WITH AI ===================== */
+    {
+      id: 'usafe',
+      title: 'Staying Safe with AI',
+      subtitle: 'Scams, deepfakes, privacy, family',
+      color: '#C92A2A',
+      icon: '🛡️',
+      locked: false,
+      lessons: [
+        {
+          id: 'usafe1', title: 'Deepfake & voice scams', icon: '🕵️', xp: 25,
+          cards: [
+            { type: 'info', title: 'It can fake a voice you’d swear was real', body: 'AI can now clone a voice from a few seconds of audio (off social media, a voicemail greeting) and fake a face on video. Scammers use this: a panicked call in your “son’s” voice needing money, or a voicemail from the “boss” saying urgently pay this account. It sounds real because it’s built from a real voice. The defence isn’t spotting the fake — it’s <b>verifying through another channel</b>.' },
+            { type: 'choice', q: 'Urgent voicemail in your boss’s voice: “pay this new account now”. Best move?', options: ['Call your boss back on their known number to confirm before paying anything', 'Pay it — the voice was unmistakably him', 'Reply to that voicemail asking if it’s really him'], answer: 0, explain: 'Verify on a number you already trust. The voice being convincing is exactly the trick, and replying just reaches the scammer who’ll happily confirm it’s “real”.' },
+            { type: 'truefalse', q: 'AI can clone someone’s voice convincingly from just a short audio clip.', isTrue: true, explain: 'A few seconds is often enough now. Assume a familiar voice on a call isn’t proof of who’s calling.' },
+            { type: 'choice', q: 'What actually makes voice-clone scams work?', options: ['Urgency plus a familiar voice short-circuits your caution', 'The fakes are flawless and impossible to question', 'They only ever target tech experts'], answer: 0, explain: 'It’s psychology more than tech — panic plus a known voice makes you skip the check. Slowing down is the whole defence; and these scams target everyone, especially businesses.' },
+            { type: 'info', title: 'Simple defences', body: 'Agree a <b>safe word</b> with family and key staff for any money request. Treat any urgent change of payment details as suspicious. Verify on a number you already have, never the one they gave you. And slow down — urgency is the scammer’s main weapon.' },
+            { type: 'choice', q: 'The single strongest protection against these scams?', options: ['Verify the request through a separate, known channel before acting', 'Train yourself to hear fake voices', 'Only answer calls from saved contacts'], answer: 0, explain: 'You can’t reliably hear the fakes, and numbers can be spoofed. Independent verification is the one thing that consistently works.' }
+          ]
+        },
+        {
+          id: 'usafe2', title: 'Spotting AI fakes', icon: '🔍', xp: 25,
+          cards: [
+            { type: 'info', title: 'The old scam-spotting rules are broken', body: 'AI now writes scam emails in clean, professional English, generates fake product photos, and pumps out fake reviews by the hundred. “You can spot a scam by bad spelling” is dead. Some AI images still have tells (mangled hands, garbled text in the background), but the safer mindset is: don’t trust based on how <i>polished or real</i> something looks — trust based on the <b>source</b> and whether it independently checks out.' },
+            { type: 'choice', q: 'Why is “spot the bad spelling” no longer a reliable scam test?', options: ['AI writes clean, professional text, so scams now read as legit', 'Scammers all took English classes recently', 'Spelling was never connected to scams at all'], answer: 0, explain: 'The tell-tale clumsiness is gone because AI drafts it. You now have to judge the source and the request, not the polish.' },
+            { type: 'truefalse', q: 'A well-written, detailed online review proves it came from a real customer.', isTrue: false, explain: 'AI can generate convincing fake reviews in bulk. Quality of writing tells you nothing about whether it’s genuine.' },
+            { type: 'choice', q: 'A “too good” photo on a marketplace listing. Smart check?', options: ['Reverse-image-search it and verify the seller independently', 'Trust it — a sharp, clear photo means it’s real', 'Assume any photo with no glitches is genuine'], answer: 0, explain: 'Looks prove nothing now. Check whether the image appears elsewhere and whether the seller is real, through your own channels.' },
+            { type: 'info', title: 'The mindset', body: 'Be wary of urgency and pressure. Verify sellers, links and requests independently. Glance for image glitches but never rely on them. And whenever money or personal details are involved, confirm through an official, known channel — not the one in the message.' }
+          ]
+        },
+        {
+          id: 'usafe3', title: 'Your privacy', icon: '🔐', xp: 25,
+          cards: [
+            { type: 'info', title: 'Where your words actually go', body: 'On a free or personal AI account, what you type can be used to help train future versions — unless you opt out in settings. Business and enterprise plans usually don’t train on your data. Either way, anything you paste leaves your device for a company’s servers. So keep genuinely sensitive material (customer data, passwords, anything confidential) out, and know where the settings are to turn off training and clear your history.' },
+            { type: 'choice', q: 'On a free/personal AI account, what can happen to what you type by default?', options: ['It may be used to help improve and train the model unless you opt out', 'It’s always deleted the instant you close the chat', 'It’s encrypted so literally no one can ever access it'], answer: 0, explain: 'Default settings often allow training on your inputs. It isn’t auto-deleted, and “no one can ever see it” isn’t how it works — check and adjust your settings.' },
+            { type: 'truefalse', q: 'Business/enterprise AI plans usually do NOT train on your data, unlike consumer ones.', isTrue: true, explain: 'That’s a key reason businesses pay for them — your data stays out of training.' },
+            { type: 'choice', q: 'Safest rule for truly sensitive info (bank details, passwords)?', options: ['Don’t paste it in at all — use AI for the wording, keep the secrets out', 'Paste it, then delete the chat afterwards', 'It’s fine as long as you trust the company'], answer: 0, explain: 'Deleting after still means it left your device, and trust isn’t a control. The reliable rule is simply not to put sensitive data in.' },
+            { type: 'info', title: 'Five-minute check', body: 'Most services have privacy controls: turn off training on your data, clear or disable memory, and delete history. Worth finding those settings once so you know exactly what’s being kept.' }
+          ]
+        },
+        {
+          id: 'usafe4', title: 'AI, kids & family', icon: '👨‍👩‍👧', xp: 25,
+          cards: [
+            { type: 'info', title: 'It’s already in your kids’ hands', body: 'Kids use AI for homework, curiosity and chat. It can be a brilliant, patient tutor — or a shortcut to not learning. The honest family line: use it to <b>understand</b>, not to hand in. Worth knowing too: there are AI “companion” chatbots aimed at teens, and AI makes fake images and scams easier. So it’s a conversation to have, not simply a ban.' },
+            { type: 'choice', q: 'The healthiest way for a kid to use AI on homework?', options: ['To explain a topic and check their understanding — not to write the answer', 'To do the whole assignment so they’ve got more free time', 'Banned completely, no exceptions ever'], answer: 0, explain: 'Used as a tutor it’s genuinely good for learning; used as a ghost-writer it replaces the learning. An outright ban also just pushes it underground — better to guide how it’s used.' },
+            { type: 'truefalse', q: 'AI can be a genuinely good tutor — explaining a concept several different ways until it clicks.', isTrue: true, explain: 'Patient, tireless, re-explains on demand — that part is a real win for learning.' },
+            { type: 'choice', q: 'A realistic family AI risk worth talking about with kids?', options: ['Fake images/messages used for bullying or scams, and oversharing personal info', 'The computer becoming sentient and taking over', 'There are no real risks at all'], answer: 0, explain: 'The grounded risks are social and personal — fakes, scams, privacy. Sci-fi “sentience” isn’t the thing to worry about, and pretending there’s no risk helps no one.' },
+            { type: 'info', title: 'Safe-with-AI recap', body: 'Verify urgent voice/video requests on a known channel. Judge by source, not polish. Keep sensitive data out and check your privacy settings. With family, use it to learn and talk about it openly. AI is a tool — powerful, imperfect, and worth handling with eyes open.' }
+          ]
+        }
+      ]
+    },
+
+    /* ===================== UNIT — MAKING THINGS WITH AI ===================== */
+    {
+      id: 'umake',
+      title: 'Making Things with AI',
+      subtitle: 'Images, video, websites',
+      color: '#AE3EC9',
+      icon: '🎨',
+      locked: false,
+      lessons: [
+        {
+          id: 'umake1', title: 'Making images', icon: '🖼️', xp: 25,
+          cards: [
+            { type: 'info', title: 'It creates a new picture from your words', body: 'Tools like ChatGPT’s image generator and Midjourney make a brand-new image from a text description. Great for marketing graphics, social posts, mockups, concepts and a laugh. Bad at: exact text inside the image (often garbled), precise logos and branding, and anything that needs to be factually accurate — it’s inventing a plausible picture, not capturing a real one. Describe subject, style, mood and colours clearly.' },
+            { type: 'choice', q: 'What is AI image generation actually doing?', options: ['Creating a brand-new image from your description', 'Finding a matching real photo from the internet', 'Editing a photo you already uploaded'], answer: 0, explain: 'It generates from scratch — which is why it’s creative and flexible, and also why it can get details wrong. It’s not search and it’s not photo-editing.' },
+            { type: 'truefalse', q: 'AI image tools are often unreliable at putting exact, correct text inside an image (a sign, a logo).', isTrue: true, explain: 'Text and precise branding are classic weak spots — expect garbled letters and approximate logos.' },
+            { type: 'choice', q: 'The best job for AI image generation?', options: ['A fresh graphic for a social post or a concept mockup', 'An accurate diagram of your actual job site', 'Your exact company logo reproduced perfectly'], answer: 0, explain: 'Creative, illustrative, “close enough” work is its lane. Accurate diagrams and exact branding are where it falls down.' },
+            { type: 'info', title: 'Prompting an image', body: 'Same idea as text: be specific. Subject + style + details + mood — e.g. “a friendly cartoon plumber fixing a tap, flat modern style, orange and blue, plain white background.” Then iterate: “more cheerful”, “remove the text”, “make it landscape”.' }
+          ]
+        },
+        {
+          id: 'umake2', title: 'AI video & voice', icon: '🎬', xp: 25,
+          cards: [
+            { type: 'info', title: 'The fast-moving frontier', body: 'The newest area is AI that generates <b>video from text</b> (like OpenAI’s Sora) and realistic <b>voiceovers and avatars</b>. Today it’s good for short marketing clips, explainer voiceovers and social content — and improving quickly. Limits: longer videos drift and lose consistency, fine detail is hard, and it’s compute-heavy (slow or paid). The flip side you met in Safety: the same tech powers deepfakes.' },
+            { type: 'choice', q: 'What can text-to-video AI realistically do today?', options: ['Generate short, often-impressive clips from a description, improving fast', 'Produce flawless feature-length films on demand', 'Only work by editing footage you upload'], answer: 0, explain: 'Short clips, getting better fast — that’s the honest state of it. It can’t reliably do long, perfect films, and it generates rather than just editing your footage.' },
+            { type: 'truefalse', q: 'AI can generate a natural-sounding voiceover from typed text.', isTrue: true, explain: 'Text-to-speech is mature enough for usable voiceovers and narration.' },
+            { type: 'choice', q: 'A sensible first use of AI video/voice for a small business?', options: ['A short social clip or a voiceover for an explainer', 'Faking all your real job photos and videos', 'A polished 30-minute training video in one shot'], answer: 0, explain: 'Start short and low-stakes. Faking your portfolio is dishonest (and risky), and long flawless video isn’t reliable yet.' },
+            { type: 'info', title: 'The two-sided coin', body: 'The power that makes this genuinely useful for marketing is the same power behind deepfakes. Use it to create your own content — and stay skeptical of realistic video or audio you didn’t make yourself.' }
+          ]
+        },
+        {
+          id: 'umake3', title: 'Build a website or app', icon: '🧱', xp: 25,
+          cards: [
+            { type: 'info', title: 'Describe it, and it builds a working version', body: 'You can now describe a simple website, calculator or app and have AI build a working version with <b>no coding</b> — via Claude’s Artifacts, ChatGPT, or dedicated AI site-builders. Realistic for a tradie: a one-page site, a “get a quote” form, a job-cost calculator. The workflow: describe it, see it built live, refine by chatting. Where a real developer still earns their money: complex sites, payments, and anything business-critical.' },
+            { type: 'choice', q: 'What’s realistic to build yourself with AI and no coding?', options: ['A simple one-page site or a cost calculator', 'A full booking-and-payments platform with zero issues', 'Nothing — you always need a developer for everything'], answer: 0, explain: 'Simple, self-contained things are very doable now. Complex transactional systems still need a pro, but “you always need a developer” is no longer true for the basics.' },
+            { type: 'truefalse', q: 'AI can build a working web page from a plain-English description and let you refine it by chatting.', isTrue: true, explain: 'Describe, preview live, tweak by talking — that’s the real workflow.' },
+            { type: 'choice', q: 'When should you still bring in a real developer?', options: ['Anything complex or business-critical — payments, big sites, security', 'Never — AI handles absolutely everything now', 'Always — AI builders don’t actually work'], answer: 0, explain: 'Match the tool to the stakes: AI for simple and quick, a developer for complex, money-handling or security-sensitive work.' },
+            { type: 'info', title: 'How to start', body: 'Describe what you want, preview it live, refine, then publish (the builders give you a link or host it for you). Start with one small thing — a quote calculator, a simple landing page — and you’ll be surprised what you can ship in an afternoon.' }
+          ]
+        },
+        {
+          id: 'umake4', title: 'Great at, rubbish at', icon: '⚖️', xp: 25,
+          cards: [
+            { type: 'info', title: 'One rule across text, images, video and code', body: 'Pulling it together: generative AI is brilliant at <b>plausible, creative, first-draft</b> output — words, images, video, code. It’s weak wherever <b>exact accuracy</b> matters: precise facts, correct text-in-images, real measurements, guaranteed-correct code, real people’s likenesses. Same rule everywhere — it generates something convincing, so you bring the judgement and the checking.' },
+            { type: 'choice', q: 'Across text, images and code, AI is strongest at…', options: ['Fast, creative first drafts you then refine and check', 'Guaranteed-accurate final output you can ship unchecked', 'Replacing human judgement entirely'], answer: 0, explain: 'Drafts and ideas, fast — that’s the strength. “Ship it unchecked” is exactly the trap, and judgement stays with you.' },
+            { type: 'truefalse', q: 'Whether it’s words, pictures or code, the same rule applies: it’s a strong draft, you verify.', isTrue: true, explain: 'The medium changes; the rule doesn’t.' },
+            { type: 'choice', q: 'Why does “it generates plausible output” apply to images and code too, not just text?', options: ['It’s the same approach throughout — predicting likely output, not retrieving guaranteed-correct results', 'Images and code are different and always come out exact', 'Only text can ever be wrong; images and code can’t'], answer: 0, explain: 'Generation is generation — a picture or a snippet of code can be confidently wrong the same way a sentence can. The accuracy check applies across the board.' },
+            { type: 'info', title: 'Making-things recap', body: 'Images for creative and marketing work (not exact text/logos). Video and voice for short content (and stay deepfake-aware). Simple sites and tools you can now build yourself. Across all of it: create fast, ship with your judgement. Next: the big questions about where this is all going.' }
+          ]
+        }
+      ]
+    },
+
+    /* ===================== UNIT — THE BIG PICTURE ===================== */
+    {
+      id: 'ubig',
+      title: 'The Big Picture',
+      subtitle: 'Jobs, “thinking”, costs, the future',
+      color: '#1098AD',
+      icon: '🔮',
+      locked: false,
+      lessons: [
+        {
+          id: 'ubig1', title: 'Will AI take my job?', icon: '💼', xp: 25,
+          cards: [
+            { type: 'info', title: 'The honest answer for a tradie', body: 'Your hands-on work — the actual plumbing, wiring, building — is among the <b>hardest</b> things for AI to touch. It can’t crawl under a house or crimp a fitting. What AI <i>will</i> change is the office side: quoting, scheduling, paperwork, customer comms. So the real shift isn’t “AI takes the trade” — it’s “tradies who use AI for the admin out-compete those who don’t.” More broadly, the jobs changing fastest are the ones that are mostly screen-and-text.' },
+            { type: 'choice', q: 'Why are hands-on trades relatively safe from AI compared with office work?', options: ['Physical, on-site, varied manual work is very hard to automate; text/screen tasks aren’t', 'Trades are legally protected from automation', 'AI isn’t smart enough to do anything useful yet'], answer: 0, explain: 'It’s about the nature of the work — unpredictable physical jobs resist automation. There’s no legal shield, and AI is plenty capable at the screen-based tasks.' },
+            { type: 'truefalse', q: 'AI is more likely to change the admin side of a trade (quotes, paperwork) than the physical work.', isTrue: true, explain: 'The keyboard tasks are squarely in its wheelhouse; the on-the-tools work isn’t.' },
+            { type: 'choice', q: 'The realistic competitive edge AI gives a tradie?', options: ['Doing the admin faster and better, so you win and deliver more work', 'Replacing your apprentices with robots', 'Nothing — it changes nothing about running a trade'], answer: 0, explain: 'It’s an efficiency multiplier on the business side. The robots aren’t coming for your apprentice, and ignoring it entirely is the actual risk.' },
+            { type: 'info', title: 'The takeaway', body: 'It’s a tool that makes good tradies more efficient, not a replacement for the trade. The threat isn’t AI itself — it’s a competitor down the road who uses it while you don’t.' }
+          ]
+        },
+        {
+          id: 'ubig2', title: 'Is it actually thinking?', icon: '🧠', xp: 25,
+          cards: [
+            { type: 'info', title: 'Fluent ≠ understanding', body: 'Despite how it sounds, an LLM isn’t “thinking” or “understanding” the way you do. It’s a very sophisticated pattern-prediction system — no beliefs, no awareness, no sense of what’s true. It produces language that <i>looks</i> like understanding because it learned the patterns of how we explain things. That’s not a put-down (it’s genuinely powerful) — but knowing it’s prediction, not comprehension, explains why it can be brilliant and clueless in the same breath.' },
+            { type: 'choice', q: 'When an LLM gives a smart-sounding explanation, what’s really going on?', options: ['It’s producing language patterns that match how good explanations look — not understanding it like a person', 'It genuinely understands and believes what it’s telling you', 'It’s retrieving a memorised, verified explanation from a store'], answer: 0, explain: 'It’s pattern-matching the shape of an explanation. There’s no inner understanding or belief, and it isn’t looking up a stored correct answer.' },
+            { type: 'truefalse', q: 'An LLM has no internal sense of whether what it’s saying is true.', isTrue: true, explain: 'No truth-meter inside — which is the root of the hallucination problem.' },
+            { type: 'choice', q: 'Why does knowing “it predicts, it doesn’t understand” actually help you?', options: ['It explains why it’s so fluent yet sometimes confidently wrong — so you know to verify', 'It means you should never trust it for anything at all', 'It’s just trivia that makes no practical difference'], answer: 0, explain: 'That one insight is why you ground and check important answers. It’s not a reason to dismiss it, and it’s very much practical, not trivia.' },
+            { type: 'info', title: 'The open debate', body: 'Whether bigger models will ever truly “understand” is a genuine, live argument among experts. For using it today, the safe stance is simple: treat it as a stunningly capable pattern machine, not a mind.' }
+          ]
+        },
+        {
+          id: 'ubig3', title: 'The costs, limits & catches', icon: '⚡', xp: 25,
+          cards: [
+            { type: 'info', title: 'It’s not magic and it’s not free', body: 'A few things about the machinery. AI runs in huge <b>data centres</b> that burn serious electricity and water — which is why the good models cost money. It’s only as good as its <b>training data</b>, so it can absorb the <b>biases</b> in what it learned. And it has hard <b>limits</b> you already know: the knowledge cut-off, the context-window ceiling, and hallucination. Knowing the catches keeps your expectations honest.' },
+            { type: 'choice', q: 'Why do the best AI models cost money to use?', options: ['Running them needs large, power-hungry data centres — a real ongoing cost', 'The companies are simply greedy; it’s actually free to run', 'Paid versions are identical to free — you’re only paying for the brand'], answer: 0, explain: 'The compute is genuinely expensive to run. Paid tiers also typically give you stronger models and higher limits — it’s not just branding.' },
+            { type: 'truefalse', q: 'An AI can reflect biases that were present in the data it was trained on.', isTrue: true, explain: 'It learns from human-made data, warts and all — so bias can carry through. Worth keeping in mind on sensitive topics.' },
+            { type: 'choice', q: 'Which is a genuine, built-in limitation of today’s AI?', options: ['A knowledge cut-off, a context-window limit, and the hallucination problem', 'It has essentially no limitations anymore', 'It can only do basic arithmetic'], answer: 0, explain: 'Those three are real and worth designing around. It’s neither limitless nor restricted to maths — it’s capable but bounded.' },
+            { type: 'info', title: 'Eyes open', body: 'None of this means don’t use it. It means use it knowing what it is: powerful, costly to run, imperfect, and shaped by its training. That’s a healthier footing than either hype or fear.' }
+          ]
+        },
+        {
+          id: 'ubig4', title: 'Where it’s heading', icon: '🔭', xp: 25,
+          cards: [
+            { type: 'info', title: 'From chatbots to agents', body: 'The clear direction: from tools you chat with toward <b>agents</b> that carry out multi-step work for you (you met these), deeper integration into the apps you already use, and models that handle text, images, voice and video together. It’s moving fast — but you don’t need to chase every release. The durable skills are the ones in this course: how to prompt, ground, verify, and pick the right tool. Those don’t expire when a new model drops.' },
+            { type: 'choice', q: 'The clearest trend in where AI is heading?', options: ['From chat tools toward agents that do multi-step tasks, woven into your apps', 'Away from automation, back toward simple keyword search', 'It’s a passing fad about to disappear'], answer: 0, explain: 'More autonomy and deeper integration is the direction of travel. It’s clearly not retreating to old-style search, and it’s well past “fad”.' },
+            { type: 'truefalse', q: 'The core skills — prompting, grounding, verifying, choosing the right tool — stay useful even as the models change.', isTrue: true, explain: 'The tools churn; the fundamentals you’ve learned carry forward. That’s why they’re worth knowing.' },
+            { type: 'choice', q: 'The smartest way to “keep up” without chasing every headline?', options: ['Master the fundamentals and adopt new tools when they solve a real problem for you', 'Buy every new AI product the day it launches', 'Ignore all of it until things settle down'], answer: 0, explain: 'Solid fundamentals plus need-driven adoption beats both the hype-chasing and the head-in-the-sand approaches.' },
+            { type: 'info', title: 'You’ve gone the distance', body: 'From “what is AI” to how it works, how to use the main tools, how to apply it to your trade and your life, how to stay safe, and where it’s heading. That’s further than most people ever get. Keep using it, keep the healthy skepticism, and tell us what you want next on the Ideas tab.' }
+          ]
+        }
+      ]
+    },
+
     /* ===================== UNIT 8 (teaser) ===================== */
     {
       id: 'u4',
