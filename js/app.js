@@ -384,12 +384,31 @@ const App = (() => {
     }
   }
 
+  // Find the next lesson to flow into: next playable lesson in the same unit,
+  // else the first playable lesson of the next unlocked unit.
+  function findNextLesson(unit, lesson) {
+    const li = unit.lessons.indexOf(lesson);
+    for (let i = li + 1; i < unit.lessons.length; i++) {
+      if (unit.lessons[i].cards && unit.lessons[i].cards.length) return { unit, lesson: unit.lessons[i], sameUnit: true };
+    }
+    const ui = COURSE.units.indexOf(unit);
+    for (let u = ui + 1; u < COURSE.units.length; u++) {
+      const nu = COURSE.units[u];
+      if (nu.locked) continue;
+      const first = nu.lessons.find(l => l.cards && l.cards.length);
+      if (first) return { unit: nu, lesson: first, sameUnit: false };
+    }
+    return null;
+  }
+
   function finishLesson() {
     const ls = lessonState;
     const scored = ls.cards.filter(c => c.type !== 'info').length;
     const { firstTime } = Store.completeLesson(ls.lesson.id, ls.lesson.xp);
     const s = Store.get();
     const accuracy = scored ? Math.round((ls.correct / scored) * 100) : 100;
+    const next = findNextLesson(ls.unit, ls.lesson);
+    const nextLabel = next ? (next.sameUnit ? 'Next lesson →' : `Next: ${esc(next.unit.title)} →`) : '';
     root.innerHTML = `
       <div class="screen done-screen" style="--unit:${ls.unit.color}">
         <div class="done-burst">🎉</div>
@@ -400,9 +419,12 @@ const App = (() => {
           <div class="dstat"><div class="dstat-num">🔥 ${s.streak}</div><div class="dstat-lbl">Day streak</div></div>
         </div>
         <div class="done-total">Total: <b>${s.xp} XP</b></div>
-        <button class="btn btn-primary btn-block" id="d-cont">Back to path</button>
+        ${next ? `<button class="btn btn-primary btn-block" id="d-next">${nextLabel}</button>` : ''}
+        <button class="btn ${next ? 'btn-ghost' : 'btn-primary'} btn-block" id="d-cont">Back to path</button>
         ${Store.isSupabaseConfigured() ? '<button class="btn btn-ghost btn-block" id="d-board">See leaderboard 🏆</button>' : ''}
       </div>`;
+    const dn = document.getElementById('d-next');
+    if (dn) dn.addEventListener('click', () => startLesson(next.unit, next.lesson));
     document.getElementById('d-cont').addEventListener('click', () => go('home'));
     const db = document.getElementById('d-board');
     if (db) db.addEventListener('click', () => go('leaderboard'));
