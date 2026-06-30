@@ -407,6 +407,40 @@ const COURSE = {
       ]
     },
 
+    /* ===================== UNIT — POWER TOOLS (advanced) ===================== */
+    {
+      id: 'upow',
+      title: 'Power Tools',
+      subtitle: 'Advanced: agents you own, AI for your notes',
+      color: '#364FC7',
+      icon: '⚙️',
+      locked: false,
+      lessons: [
+        {
+          id: 'upow1', title: 'OpenClaw: an agent you own', icon: '🦞', xp: 35,
+          cards: [
+            { type: 'info', title: 'The AI that actually does things', body: 'OpenClaw is a free, <b>open-source, self-hosted</b> AI agent. You run it on your own computer or server, and it connects an AI model to the messaging apps you already use — WhatsApp, Telegram, Signal, iMessage — and to real tools: your email, calendar, web browser and files. You message it like a contact and it <b>does the task</b>, not just talks about it. It went viral as “the AI that actually does things,” and its creator, Peter Steinberger, has since joined OpenAI to build the next generation of personal agents.' },
+            { type: 'choice', q: 'What makes OpenClaw different from chatting with ChatGPT in a browser?', options: ['It runs on hardware you control and actually carries out tasks (email, calendar, browsing) through your messaging apps', 'It’s just a faster, cheaper chatbot', 'It only answers questions, the same as any chat'], answer: 0, explain: 'The leap is that it acts — it runs on your own machine and does real jobs via tools, rather than only producing text like a normal chat.' },
+            { type: 'info', title: 'It’s the agent loop, made real', body: 'Under the hood it’s exactly the <b>agent + harness</b> idea from AI High Level. A central “gateway” bridges your messaging app to an agent runtime, and the model runs a multi-turn loop — read the context, call a tool, run it, feed the result back — repeating until the job’s done. OpenClaw is that concept turned into something you can actually run yourself.' },
+            { type: 'truefalse', q: 'OpenClaw is essentially the “agent in a loop with tools” concept packaged as a product you host yourself.', isTrue: true, explain: 'Spot on — it’s the agent/harness pattern from the High Level unit, made into a real, runnable system.' },
+            { type: 'choice', q: 'A real benefit of OpenClaw being self-hosted on your own machine?', options: ['The agent and your data run on hardware you control — more private than a cloud service', 'It’s always faster than any cloud AI', 'It removes the need for an AI model at all'], answer: 0, explain: 'Self-hosting is mainly about control and privacy. It still needs an LLM to think, and “your hardware” isn’t automatically faster than a big cloud.' },
+            { type: 'info', title: 'Why it’s genuinely “high level”', body: 'Two reasons. It’s a developer-ish setup — you run a server and wire up the connections — so it isn’t point-and-click yet. And an agent with access to your email, files and commands needs <b>serious guardrails</b>: remember agents act on their assumptions, and small errors compound across steps. But it’s a clear sign of where things are heading — a private personal assistant <i>you own</i> that does real work. Which is exactly why OpenAI hired its creator.' }
+          ]
+        },
+        {
+          id: 'upow2', title: 'Your AI second brain', icon: '🧠', xp: 30,
+          cards: [
+            { type: 'info', title: 'Point AI at your own notes', body: 'Once you’ve built a second brain — linked notes on your own device (that’s the <b>Build a Second Brain</b> unit) — the high-level move is to <b>point AI at it</b>. Plugins like <b>Smart Connections</b> and <b>Copilot for Obsidian</b> let you chat with your whole vault: the AI answers from YOUR notes, not the open internet. Ask “what did I learn on the Henderson job?” or “summarise everything I know about heat pumps,” and it pulls from what you’ve actually written.' },
+            { type: 'choice', q: 'Chatting with AI over your own notes is really an example of which technique?', options: ['Grounding — answering from material you supplied, not from training', 'Retraining the model on your personal data', 'A faster version of an internet search'], answer: 0, explain: 'It’s the grounding idea from Basics, applied to your own knowledge. Nothing is retrained, and it’s not searching the web — it’s reading your notes.' },
+            { type: 'truefalse', q: 'Because it answers from your real notes, an AI over your vault is far less likely to make things up than asking it cold.', isTrue: true, explain: 'Grounding keeps it to your actual material, so there’s much less room to invent. (Your notes can still be wrong — but it won’t fabricate beyond them.)' },
+            { type: 'info', title: 'Keep it private: local models', body: 'Because your notes are plain files on your machine, you can run the AI with a <b>local model</b> (via a tool like Ollama) so the whole thing — notes and AI — stays on your own computer and never touches the cloud. For sensitive job records or client info, that’s a second brain that’s private by design.' },
+            { type: 'choice', q: 'Why might you run a local model over your notes instead of a cloud AI?', options: ['Your notes never leave your device — privacy and control', 'Local models are always smarter than cloud ones', 'It makes your notes link themselves automatically'], answer: 0, explain: 'The win is privacy — nothing leaves your machine. Local models are usually <i>less</i> capable than the big cloud ones, and they don’t do your linking for you.' },
+            { type: 'info', title: 'Plug Claude straight in (MCP)', body: 'Remember <b>Connectors / MCP</b> from the Claude unit? You can connect Claude directly to your vault so it can read, search and even update your notes as a live workspace — the agent and your second brain working together. That’s the frontier: a private, searchable AI expert on everything <i>you</i> know.' }
+          ]
+        }
+      ]
+    },
+
     /* ===================== UNIT 4 — MEET CLAUDE ===================== */
     {
       id: 'ucl',
@@ -845,6 +879,72 @@ const COURSE = {
             { type: 'truefalse', q: 'The core skills — prompting, grounding, verifying, choosing the right tool — stay useful even as the models change.', isTrue: true, explain: 'The tools churn; the fundamentals you’ve learned carry forward. That’s why they’re worth knowing.' },
             { type: 'choice', q: 'The smartest way to “keep up” without chasing every headline?', options: ['Master the fundamentals and adopt new tools when they solve a real problem for you', 'Buy every new AI product the day it launches', 'Ignore all of it until things settle down'], answer: 0, explain: 'Solid fundamentals plus need-driven adoption beats both the hype-chasing and the head-in-the-sand approaches.' },
             { type: 'info', title: 'You’ve gone the distance', body: 'From “what is AI” to how it works, how to use the main tools, how to apply it to your trade and your life, how to stay safe, and where it’s heading. That’s further than most people ever get. Keep using it, keep the healthy skepticism, and tell us what you want next on the Ideas tab.' }
+          ]
+        }
+      ]
+    },
+
+    /* ===================== UNIT — SECOND BRAIN (OBSIDIAN) ===================== */
+    {
+      id: 'uobs',
+      title: 'Build a Second Brain',
+      subtitle: 'Obsidian: notes that link, on your own device',
+      color: '#7C5CFF',
+      icon: '💎',
+      locked: false,
+      lessons: [
+        {
+          id: 'uobs1', title: 'What Obsidian actually is', icon: '💎', xp: 25,
+          cards: [
+            { type: 'info', title: 'It’s a notes app where the notes are <i>your</i> files', body: 'Obsidian looks like a note-taking app, but the big difference is where your notes live. Every note is saved as a plain-text <b>Markdown</b> file (a <code>.md</code> file) in an ordinary folder on your own device. That folder is called a <b>vault</b>. Nothing is trapped in a company’s cloud — you could open the exact same files in Notepad. That’s the whole philosophy: <b>local-first, plain text, you own it.</b>' },
+            { type: 'choice', q: 'Where do your Obsidian notes actually live?', options: ['On your own device, as plain text files in a folder (your vault)', 'On Obsidian’s servers in the cloud, like most note apps', 'Inside a locked database only Obsidian can open'], answer: 0, explain: 'They’re ordinary files in a folder on your machine. There’s no forced cloud and no locked format — that’s exactly what makes Obsidian different from most note apps.' },
+            { type: 'truefalse', q: 'If Obsidian shut down tomorrow, your notes would be locked away and unreadable.', isTrue: false, explain: 'They’re plain Markdown text files sitting in a normal folder — you could open and read every one in any text editor. Your notes don’t depend on the app surviving.' },
+            { type: 'info', title: 'Free — and genuinely yours', body: 'Obsidian itself is free to download and use, even for work. The company makes its money from two <i>optional</i> paid add-ons: <b>Sync</b> (keeps your vault matched across phone and laptop) and <b>Publish</b> (turns chosen notes into a website). You never have to buy either to use Obsidian fully — they’re extras, not a paywall.' },
+            { type: 'choice', q: 'What does it cost to use Obsidian for taking notes?', options: ['Nothing — it’s free; the paid add-ons (Sync, Publish) are optional extras', 'A monthly subscription, like most note apps', 'Free for 30 days, then it locks until you pay'], answer: 0, explain: 'The app is free, including for work. They sell optional services on top (Sync, Publish), but plain note-taking costs nothing and never expires.' }
+          ]
+        },
+        {
+          id: 'uobs2', title: 'Vaults, notes & Markdown', icon: '📝', xp: 25,
+          cards: [
+            { type: 'info', title: 'Three words and you’re away', body: 'A <b>vault</b> is just a folder of notes. A <b>note</b> is a single file inside it. <b>Markdown</b> is the simple way you format the text: a <code>#</code> makes a heading, <code>**stars**</code> make text bold, a <code>-</code> starts a bullet, and <code>- [ ]</code> makes a tick-box you can check off. You type the little marks; Obsidian shows it formatted. That’s 90% of the formatting you’ll ever need.' },
+            { type: 'match', q: 'Match the Markdown to what it does on the page.', pairs: [['# Job notes', 'A heading'], ['**urgent**', 'Bold text'], ['- new tap', 'A bullet point'], ['- [ ] order parts', 'A tick-box you can check off']], explain: 'A few tiny marks cover headings, bold, bullets and checklists — that’s the bulk of Markdown. It’s plain text, so it stays readable even without the app.' },
+            { type: 'choice', q: 'You want a checklist of materials inside a note. In Markdown, each line would be…', options: ['- [ ] item  (a tick-box)', '**item**  (bold)', '# item  (a heading)'], answer: 0, explain: 'The <code>- [ ]</code> pattern makes a checkable box. Bold and headings are for emphasis and structure, not ticking things off.' },
+            { type: 'truefalse', q: 'Because notes are plain Markdown, the same note still opens and reads fine in almost any other app.', isTrue: true, explain: 'Plain text travels anywhere. That’s the payoff of Markdown — your notes aren’t locked to one program.' },
+            { type: 'info', title: 'One vault for the whole work-brain', body: 'A common beginner question: “should I make a separate vault for each job?” Usually <b>no</b>. Obsidian’s real power is <b>connecting</b> notes together — and notes in different vaults can’t link to each other. So keep one vault for your whole business brain (jobs, customers, suppliers, ideas) and let it all connect. You’ll see why in the next lesson.' }
+          ]
+        },
+        {
+          id: 'uobs3', title: 'The big idea: linking notes', icon: '🔗', xp: 25,
+          cards: [
+            { type: 'info', title: 'This is why people switch', body: 'Instead of burying notes in folders, in Obsidian you <b>link</b> them. Type <code>[[</code> and start a note’s name — <code>[[Smith bathroom job]]</code> — and Obsidian turns it into a clickable link, even creating that note if it doesn’t exist yet. Your notes stop being a filing cabinet and become a <b>web</b> of connected ideas. That web is exactly what people mean by a <b>second brain</b>.' },
+            { type: 'choice', q: 'How do you link one note to another in Obsidian?', options: ['Type [[ and start the note’s name', 'Copy and paste the full file path in by hand', 'You can’t — every note stands on its own'], answer: 0, explain: 'The <code>[[ ]]</code> link is the heart of Obsidian. No fiddling with file paths, and notes are very much meant to connect.' },
+            { type: 'info', title: 'Links work both ways — backlinks', body: 'Link note A to note B, and B automatically shows a <b>backlink</b>: a list of every note that points <i>to</i> it. So opening “Smith bathroom job” instantly shows every other note that mentioned it — the quote, the invoice, the snag list — even though you never filed them together. The connections do the organising <i>for</i> you.' },
+            { type: 'truefalse', q: 'A backlink lets a note show you every other note that links to it, automatically.', isTrue: true, explain: 'That’s the magic of two-way links — you build a connection once and both notes know about it. No extra filing.' },
+            { type: 'info', title: 'The graph view', body: 'Obsidian can draw your whole vault as a <b>graph</b>: a dot for every note, a line for every link. It’s not just for show — clusters reveal where your thinking is well-connected, and lonely dots show notes you haven’t linked to anything yet. But the graph is a <i>by-product</i>. The value is in making the links as you write, not in the pretty picture.' },
+            { type: 'choice', q: 'What’s the real point of linking notes as you write?', options: ['Related notes connect into a web you can navigate — instead of being lost in folders', 'It makes the graph view look more impressive', 'It automatically deletes any duplicate notes'], answer: 0, explain: 'Linking builds a navigable web of your knowledge. The graph is a side-effect of that, and linking doesn’t delete anything.' }
+          ]
+        },
+        {
+          id: 'uobs4', title: 'Tags, search & finding things', icon: '🏷️', xp: 25,
+          cards: [
+            { type: 'info', title: 'Tags: labels you sprinkle anywhere', body: 'A <b>tag</b> is a label you drop into a note just by writing <code>#warranty</code> or <code>#quote</code>. Unlike a folder, one note can wear several tags at once — <code>#warranty #urgent</code> both apply. Click a tag and you see every note carrying it. The rule of thumb: <b>links connect specific notes; tags cut across many notes</b> with a shared theme.' },
+            { type: 'choice', q: 'A note can sit in only one folder. How many tags can it carry?', options: ['As many as you like — which is exactly why tags beat folders for cross-cutting labels', 'Also just one, same as a folder', 'None — tags are only for to-do lists'], answer: 0, explain: 'One note, many tags. That’s the advantage over folders: a job can be #warranty AND #urgent AND #commercial all at once.' },
+            { type: 'info', title: 'Search is instant', body: 'Because every note is plain text, Obsidian searches the <b>full text</b> of your whole vault in real time. Between <b>search, links and tags</b>, you can find anything — which means you rarely need a perfect filing system. That’s the freeing part: stop agonising over which folder a note belongs in, just write it and find it later by searching for a word you know is in it.' },
+            { type: 'truefalse', q: 'You must carefully file every note in exactly the right folder or you’ll never find it again.', isTrue: false, explain: 'Full-text search, links and tags do the finding for you. Folders are optional in Obsidian — the search bar is your safety net.' },
+            { type: 'match', q: 'Match each tool to the job it’s best for.', pairs: [['[[link]]', 'Connect two specific notes'], ['#tag', 'Label many notes with one theme'], ['Search', 'Find any word across the whole vault'], ['Folder', 'Loosely group files (optional)']], explain: 'Links join specific notes, tags group by theme, search finds anything by word, and folders are just a loose optional tidy-up. You don’t need all four — but each has its moment.' },
+            { type: 'info', title: 'Don’t over-organise', body: 'The classic beginner trap is spending more time building the “perfect” folder-and-tag system than actually writing notes. The advice from heavy users is the same every time: <b>keep it simple, write first, let links form naturally.</b> A slightly messy vault you actually use beats a perfectly organised one you abandon after a week.' }
+          ]
+        },
+        {
+          id: 'uobs5', title: 'Make it work for your trade', icon: '🛠️', xp: 25,
+          cards: [
+            { type: 'info', title: 'Two built-in tools that do the heavy lifting', body: '<b>Daily Notes</b> gives you one dated note per day at a click — a perfect running site diary you don’t have to name or file. <b>Templates</b> let you save a skeleton (your standard job-note layout, a pre-start checklist) and drop it into a new note instantly, so every job gets recorded the same way without retyping the headings. Both are switched on in Settings — no add-ons needed.' },
+            { type: 'choice', q: 'You want every job written up the same way without retyping the headings each time. Use…', options: ['A Template you fill in', 'A fresh blank note every time and type it out again', 'The graph view'], answer: 0, explain: 'A Template is a reusable skeleton — set up your job-note layout once, drop it in for every job. The graph is for seeing links, not creating notes.' },
+            { type: 'info', title: 'On your phone, and across devices', body: 'Obsidian has a free <b>mobile app</b>, so you can capture a note on site and finish it on the laptop later. To keep both in step they need to be looking at the same vault — that’s the job of the paid <b>Obsidian Sync</b>, which does it reliably including on mobile. Some people use iCloud or Dropbox instead to avoid the fee, but those can get fiddly on phones — Sync exists because it just works.' },
+            { type: 'truefalse', q: 'There’s an Obsidian app for your phone, so you can jot site notes on the go.', isTrue: true, explain: 'The mobile app is free. Capture on site, tidy up on the laptop — as long as both point at the same synced vault.' },
+            { type: 'info', title: 'Plug it straight into your AI', body: 'Here’s where this course and the rest of the app meet. Because your notes are <b>plain text</b>, they drop straight into an AI with zero friction. Paste a messy dictated job note in, ask for a tidy summary, paste the result back into your vault. Or paste a customer’s spec alongside your notes and ask what’s missing. <b>Obsidian holds your knowledge; AI helps you write and sort it</b> — two tools, one workflow.' },
+            { type: 'choice', q: 'Why do plain-text Obsidian notes work so well with AI tools?', options: ['You can paste them straight in and paste the result back — no locked format in the way', 'AI is the only thing that can actually read Obsidian files', 'You can’t use Obsidian notes with AI at all'], answer: 0, explain: 'Plain text is the universal handover format — it flows in and out of any AI with nothing in the way. That’s a direct payoff of Obsidian keeping your notes as plain Markdown.' },
+            { type: 'info', title: 'Second-brain recap', body: 'Your notes are plain-text files in a <b>vault</b> you own. Format with <b>Markdown</b>, connect notes with <b>[[links]]</b>, label across them with <b>#tags</b>, and find anything by <b>search</b>. Use <b>Daily Notes</b> and <b>Templates</b> for your jobs, the <b>mobile app</b> to capture on site, and paste notes into <b>AI</b> to tidy and sort them. A second brain that’s genuinely, permanently yours.' }
           ]
         }
       ]
