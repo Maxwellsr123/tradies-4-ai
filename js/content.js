@@ -607,33 +607,89 @@ const COURSE = {
       ]
     },
 
-    /* ===================== UNIT 6 (teaser) ===================== */
+    /* ===================== UNIT 6 — RUN THE BUSINESS ===================== */
     {
       id: 'u2',
       title: 'Run the Business',
       subtitle: 'Quotes, invoices, customers',
       color: '#2D9CDB',
       icon: '💼',
-      locked: true,
+      locked: false,
       lessons: [
-        { id: 'u2l1', title: 'Quotes in seconds', icon: '🧾', xp: 25, cards: [] },
-        { id: 'u2l2', title: 'Chasing payments', icon: '💸', xp: 25, cards: [] },
-        { id: 'u2l3', title: 'Customer messages', icon: '📨', xp: 25, cards: [] }
+        {
+          id: 'u2l1', title: 'Quotes in seconds', icon: '🧾', xp: 25,
+          cards: [
+            { type: 'info', title: 'Split the wording from the pricing', body: 'AI is brilliant at the <b>words</b> of a quote — structuring the scope, listing inclusions and exclusions, writing clear clarifications. What it must <b>not</b> do is invent your prices. The move: feed it your rate card and the job details, let it assemble and format the quote, and you set and check every number. Words = its strength; pricing = your data.' },
+            { type: 'choice', q: 'AI drafts a quote and fills in prices you never gave it. What’s actually going on?', options: ['It’s inventing plausible-looking numbers — a hallucination; feed it your real rates', 'It looked up your competitors’ live pricing', 'It knows the going market rate, so the figures are reliable'], answer: 0, explain: 'With no prices from you, it generates numbers that merely look right — same hallucination problem as anywhere. It isn’t pulling live market or competitor data. Always give it your rates.' },
+            { type: 'truefalse', q: 'Giving AI your rate card and telling it to use only those figures is safer than letting it estimate prices.', isTrue: true, explain: 'Grounding it in your real rates removes the room to invent. The numbers come from you; the formatting comes from it.' },
+            { type: 'choice', q: 'The best division of labour for a quote?', options: ['AI structures the scope, inclusions and wording; you set and verify the prices', 'AI sets the prices and you just send it', 'AI does it all, including emailing the customer, untouched'], answer: 0, explain: 'Let it do the wordy, repetitive part and keep the pricing and the final send with you — that’s where your judgement and liability sit.' },
+            { type: 'info', title: 'A strong quoting prompt', body: 'Role (“you’re quoting for my plumbing business”), the job scope (paste it), your rates (paste the relevant lines), and the format (itemised labour + materials, inclusions, exclusions, total). Add the safety line: “flag anything you’re unsure about rather than guessing.” Now it assembles a tidy quote from <i>your</i> facts.' },
+            { type: 'choice', q: 'Why add “flag anything you’re unsure about” to a quoting prompt?', options: ['It surfaces gaps for you to fill instead of confidently inventing details', 'It makes the quote longer and more impressive', 'It legally protects you from errors in the quote'], answer: 0, explain: 'Given an out, it’ll tell you what it’s missing rather than papering over it with a confident guess. It’s about catching gaps, not length or legal cover.' }
+          ]
+        },
+        {
+          id: 'u2l2', title: 'Chasing payments', icon: '💸', xp: 25,
+          cards: [
+            { type: 'info', title: 'It writes the awkward money messages', body: 'Chasing overdue invoices is the job nobody enjoys — which is exactly where AI helps. Give it the facts (amount, days overdue, whether it’s the first or third reminder) and the tone you want, and it writes a clean, appropriately-pitched message. You keep the relationship and decide when to escalate; it handles the wording.' },
+            { type: 'choice', q: 'For a first reminder on a 7-day-overdue invoice, the tone to ask for is…', options: ['A friendly, good-faith nudge — most late payers just forgot', 'Firm legal-threat language to be taken seriously', 'No message — just keep waiting and hope'], answer: 0, explain: 'Open friendly and assume the best; you can escalate later if needed. Leading with legal threats torches goodwill, and silence rarely gets you paid.' },
+            { type: 'truefalse', q: 'Telling AI the amount, the days overdue and that it’s the second reminder helps it pitch the tone correctly.', isTrue: true, explain: 'Those facts are the context it steers on — second reminder reads differently from the first.' },
+            { type: 'info', title: 'The escalation ladder', body: 'A normal sequence: friendly reminder → firmer follow-up → final notice stating the next step. AI can write all three in your voice; the part that stays with <b>you</b> is deciding <i>when</i> to move up a rung. The wording is delegated; the judgement isn’t.' },
+            { type: 'choice', q: 'Invoice is 30 days over, two friendly reminders ignored. Ask AI for…', options: ['A firm but professional final notice that states the next step clearly', 'A fourth identical friendly reminder', 'An aggressive message designed to rattle them'], answer: 0, explain: 'Match the message to the stage: firm, professional, clear about what happens next. Repeating the soft reminder gets ignored again; aggression invites a dispute.' },
+            { type: 'choice', q: 'What should stay your call, not AI’s?', options: ['The decision to actually escalate or take action', 'The exact wording of the reminder', 'The layout of the message'], answer: 0, explain: 'Wording and layout: delegate freely. Whether to send a final notice or involve a debt process is a business and relationship call — yours.' }
+          ]
+        },
+        {
+          id: 'u2l3', title: 'Customer messages', icon: '📨', xp: 25,
+          cards: [
+            { type: 'info', title: 'Most customer comms are repetitive — delegate the drafting', body: 'Enquiries, booking confirmations, running-late texts, review replies — you write versions of the same messages constantly. AI drafts them in your voice in seconds. Two power moves: paste an example of how you normally talk so it matches your style, and for tricky ones (a complaint) ask for a calm, professional version you then adjust before sending.' },
+            { type: 'choice', q: 'A 1-star review lands. Best way to use AI on it?', options: ['Paste the review and ask for a calm, professional reply that acknowledges it and offers to make it right', 'Ask it to write a reply that argues back and defends you', 'Have it post a reply automatically without you reading it'], answer: 0, explain: 'Calm, accountable, solution-focused wins back trust (and reads well to everyone else watching). Arguing escalates, and no customer reply should ever go out unread.' },
+            { type: 'truefalse', q: 'Pasting an example of how you usually talk to customers gets replies that actually sound like you.', isTrue: true, explain: 'That’s in-context learning doing the work — show it your voice and it matches it.' },
+            { type: 'choice', q: 'You’re running 30 minutes late to a job. Fastest good move?', options: ['Ask for a short, friendly heads-up text with the new time', 'Type out a careful paragraph yourself while driving', 'Say nothing and explain when you arrive'], answer: 0, explain: 'A quick AI-drafted text keeps the customer warm and takes seconds. A heads-up beats an apology on arrival every time.' },
+            { type: 'choice', q: 'For an angry complaint, why let AI draft it but you send it?', options: ['It keeps the wording calm and professional; you check it fits the real situation first', 'It’s legally required that a person sends complaint replies', 'AI can’t actually write complaint replies on its own'], answer: 0, explain: 'AI is great at taking the heat out of the wording when you’re annoyed — but you know the full story and the customer, so you do the final check before it goes.' },
+            { type: 'info', title: 'Run-the-business recap', body: 'Quotes: AI structures, you price and check. Payments: AI writes, you decide when to escalate. Messages: AI drafts in your voice, you review the tricky ones. The pattern throughout — delegate the drafting, keep the judgement and the relationships.' }
+          ]
+        }
       ]
     },
 
-    /* ===================== UNIT 7 (teaser) ===================== */
+    /* ===================== UNIT 7 — ON THE TOOLS ===================== */
     {
       id: 'u3',
       title: 'On the Tools',
       subtitle: 'AI on the job site',
       color: '#27AE60',
       icon: '🛠️',
-      locked: true,
+      locked: false,
       lessons: [
-        { id: 'u3l1', title: 'Photo → advice', icon: '📷', xp: 25, cards: [] },
-        { id: 'u3l2', title: 'Voice notes → notes', icon: '🎙️', xp: 25, cards: [] },
-        { id: 'u3l3', title: 'Reading plans & specs', icon: '📐', xp: 25, cards: [] }
+        {
+          id: 'u3l1', title: 'Photo → advice', icon: '📷', xp: 25,
+          cards: [
+            { type: 'info', title: 'A second opinion in your pocket', body: 'Point your camera at a part, a fault, a nameplate or a connection and AI can often identify it, read the model and specs off it, or suggest what’s going on. It’s genuinely useful on site — a quick second opinion when you’re not sure. The limit you already know from vision: it’s good, not perfect, so confirm anything that’s safety- or compliance-critical.' },
+            { type: 'choice', q: 'You find an old, unlabelled valve and aren’t sure what it is. Useful AI move?', options: ['Photograph it and ask it to identify the type and likely function', 'Describe it in a long paragraph and hope it guesses', 'Assume AI can’t help with physical parts'], answer: 0, explain: 'Showing beats describing for anything visual — and vision is exactly what it’s for. A clear photo gets a far better read than a worded description.' },
+            { type: 'truefalse', q: 'AI can read a model number off a nameplate photo and pull up likely specs for it.', isTrue: true, explain: 'Reading text off an image is a core vision skill — handy for old gear with no paperwork. (Still confirm the spec before you rely on it.)' },
+            { type: 'choice', q: 'It IDs a part from a blurry photo and you’re about to order a replacement on it. Smart step?', options: ['Confirm the exact model yourself before ordering', 'Order straight away — it sounded confident', 'Order two in case it’s wrong'], answer: 0, explain: 'A blurry photo is where vision slips, and confidence isn’t proof — a 30-second check beats a wrong part and a second trip to the supplier.' },
+            { type: 'info', title: 'Good for gut-checks, not sign-off', body: 'Photos are great for “does this look installed right?” or “what’s likely causing this?” But for anything that needs official sign-off or compliance, AI is a prompt for <i>your</i> check — it points you at things to verify, it’s not the authority that approves them.' }
+          ]
+        },
+        {
+          id: 'u3l2', title: 'Voice notes → notes', icon: '🎙️', xp: 25,
+          cards: [
+            { type: 'info', title: 'Talk now, tidy in seconds later', body: 'Typing on site is slow and fiddly. Talking isn’t. Dictate a rambling brain-dump — what you did, what you found, what’s next, materials used — then have AI turn that mess into clean, structured notes: a job record, a variation list, a materials tally. You capture everything in the moment; AI does the tidying afterwards.' },
+            { type: 'choice', q: 'The best use of voice on a busy site?', options: ['Dictate a quick brain-dump now and have AI structure it into notes later', 'Carefully compose perfect notes out loud in one take', 'Avoid it — voice is only for asking questions'], answer: 0, explain: 'The win is capturing detail fast and messy, then letting AI organise it. You don’t need it perfect out loud, and voice does far more than Q&A.' },
+            { type: 'truefalse', q: 'AI can take a messy spoken brain-dump and turn it into a tidy list of work done and materials used.', isTrue: true, explain: 'Restructuring rambling input into clean output is one of its most reliable, undersold uses.' },
+            { type: 'choice', q: 'Why dictate now and structure later, rather than type it all on site?', options: ['You capture the detail while it’s fresh without slowing the job down', 'Typed notes are always less accurate than spoken ones', 'Voice notes can’t be edited, so they’re more honest'], answer: 0, explain: 'The point is speed and freshness — get it out of your head mid-job, tidy it at smoko. It’s not that typing is inaccurate or that voice is somehow more truthful.' }
+          ]
+        },
+        {
+          id: 'u3l3', title: 'Reading plans & specs', icon: '📐', xp: 25,
+          cards: [
+            { type: 'info', title: 'Let it chew the dense documents — but ground it', body: 'A 60-page spec or a dense plan is exactly the kind of thing AI is good at working through — <b>if you ground it</b>. Upload the actual document and ask targeted questions (“what’s specified for the hot water system?”, “list everything to do with drainage”). Tell it to quote the section it’s drawing from, so you can check. The golden rule from Basics applies hard here: upload and ask, never ask from memory.' },
+            { type: 'choice', q: 'Fastest reliable way to find what a 60-page spec says about drainage?', options: ['Upload it and ask, telling it to quote the relevant sections', 'Ask from memory — it has probably seen specs like this', 'Read all 60 pages yourself before asking anything'], answer: 0, explain: 'Grounding it in the real document and asking it to cite gives you a fast, checkable answer. “From memory” invites invention; reading all 60 pages first defeats the purpose.' },
+            { type: 'truefalse', q: 'Asking it to quote the section it’s drawing from lets you verify the answer and catches mistakes.', isTrue: true, explain: 'A citation you can check in seconds is the difference between a useful tool and a confident guess.' },
+            { type: 'choice', q: 'It pulls a key dimension off the plan that you’re about to build to. Before you do?', options: ['Check it against the actual plan — reading plans isn’t infallible', 'Build to it — it read the plan so it must be right', 'Round it to the nearest convenient number'], answer: 0, explain: 'Vision and PDF reading can misread a busy drawing, and a wrong dimension is an expensive mistake. Confirm the critical numbers against the source.' },
+            { type: 'info', title: 'On-the-tools recap', body: 'Photos for quick IDs and gut-checks (confirm the critical stuff). Voice to capture notes fast, AI to tidy them. Dense specs and plans: upload, ask targeted questions, make it cite, verify what you build to. AI is a fast set of extra eyes — you stay the one who signs off.' }
+          ]
+        }
       ]
     },
 

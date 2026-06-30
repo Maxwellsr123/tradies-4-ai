@@ -81,6 +81,12 @@ const Store = (() => {
 
   async function initSupabase() {
     if (!supabaseReady()) return false;
+    // SAFETY: never touch the live database from local dev/testing. Only the
+    // real deployed site (not localhost) reads or writes the leaderboard.
+    if (/^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(location.hostname)) {
+      console.log('Local dev — leaderboard/Supabase disabled so testing can’t affect live data.');
+      return false;
+    }
     try {
       supa = window.supabase.createClient(window.CONFIG.SUPABASE_URL, window.CONFIG.SUPABASE_ANON_KEY);
       ensureClientId();
